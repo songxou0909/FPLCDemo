@@ -47,9 +47,12 @@ html,body{height:100%;overflow:hidden}.app{height:100vh;height:100dvh;max-width:
 .column-figure{transform-box:fill-box;transform-origin:center}
 /* Real column figures stay in the scene, so interrupted switches remain smooth. */
 body[data-view="single"] .column-figure{transform-box:view-box;transform-origin:810px 250px;transform:translate(var(--column-x,0px),var(--column-y,0px)) scale(var(--column-scale,1));opacity:var(--column-opacity,1);pointer-events:none}
-.selected-column-name{font-size:13px;font-weight:650}
+.selected-column-name{font-size:12px;font-weight:650}
 .selected-column-method{font-size:10px;fill:var(--muted)!important}
 .diagram .operating-limit{font-size:10px;fill:var(--muted)}
+.diagram [id$="-flow-limit"],.diagram [id$="-pressure-limit"]{font-size:10px;font-weight:700;fill:var(--ink)}
+body.scrubbing .flow-dash{animation-play-state:paused}
+#process-slider{touch-action:none}
 @media(max-width:760px){
  .column-card{flex-basis:146px;flex-direction:row;align-items:center;gap:7px;padding:6px 8px}
  .column-card strong{font-size:11px;min-height:0}
@@ -98,7 +101,7 @@ body[data-view="single"] .column-figure{transform-box:view-box;transform-origin:
      <text x="817" y="48" class="tiny" text-anchor="middle" id="displaced-label" hidden="">Displaced upper-chamber liquid → waste</text>
      <g id="sources"></g>
      <g id="pump" class="pump-stopped"><circle id="mixer-liquid" class="component" cx="267" cy="220" r="25"/><g transform="translate(267 220)"><g id="pump-rotor" fill="#719789"><path id="pump-blade" d="M-2-2C-10-6-13-17-5-19C2-21 8-14 5-7L2 1Z"/><use href="#pump-blade" transform="rotate(120)"/><use href="#pump-blade" transform="rotate(240)"/></g><circle r="5.5" fill="#fff" stroke="#719789" stroke-width="1.5"/><circle r="2" fill="#719789"/></g><text x="267" y="263" class="caption" text-anchor="middle">Pump + mixer</text><text x="267" y="280" class="micro" text-anchor="middle" id="pump-label">Stopped</text></g>
-     <text x="450" y="88" class="caption" text-anchor="middle">Superloop</text><rect x="421" y="114" width="58" height="168" rx="15" fill="#fff" stroke="#a8bdb1" stroke-width="1.5"/>
+     <text x="493" y="125" class="caption" text-anchor="start">Superloop</text><rect x="421" y="114" width="58" height="168" rx="15" fill="#fff" stroke="#a8bdb1" stroke-width="1.5"/>
      <g clip-path="url(#loop-clip)"><rect id="loop-carrier" x="426" y="121" width="48" height="153" fill="#8d78b4" fill-opacity=".34"/><rect id="loop-incoming" x="426" y="121" width="48" height="0" fill="#338fc5" fill-opacity=".34"/><path id="loop-front" d="M426 121H474" stroke="#338fc5" stroke-width="1.5" opacity="0"/><rect id="loop-sample" x="426" y="274" width="48" height="0" fill="#d75e75" fill-opacity=".68"/><g id="loop-proteins"></g><rect id="seal" x="424" y="264" width="52" height="7" rx="2" fill="#64796c"/><path id="loop-through" d="M450 125V266" fill="none" stroke-width="3" stroke-dasharray="2 12" stroke-linecap="round"/></g>
      <path d="M432 134h7m-7 18h7m-7 18h7m-7 18h7m-7 18h7m-7 18h7m-7 18h7" stroke="#fff" stroke-width="1.5" opacity=".8"/>
      <text x="493" y="145" class="tiny" id="upper-chamber-label">20% EtOH</text><text x="493" y="161" class="tiny" id="seal-label">Seal at base</text><text x="493" y="261" class="tiny" id="sample-label"></text>
@@ -117,12 +120,12 @@ body[data-view="single"] .column-figure{transform-box:view-box;transform-origin:
    <div class="legend"><div class="liquid-legend"><span class="key"><i class="swatch" style="background:var(--water)"></i>H₂O</span><span class="key"><i class="swatch" style="background:var(--a)"></i>Buffer A</span><span class="key"><i class="swatch" style="background:var(--b)"></i>Buffer B</span><span class="key"><i class="swatch" style="background:var(--etoh)"></i>20% EtOH</span><span class="key"><i class="swatch" style="background:var(--sample)"></i>Sample / protein</span></div><div class="route-legend"><span class="key"><i class="legend-gate">→</i>Open path</span><span class="key"><i class="legend-gate">×</i>Closed path</span><span>→ Flow direction</span><span>Grey tubing = inactive</span></div></div>
   </div>
   <div class="status-strip"><div class="status-item"><div class="status-label">Liquid / drive</div><div class="status-value"><i class="status-dot" id="liquid-dot"></i><span id="liquid-status"></span></div></div><div class="status-item"><div class="status-label">Injection valve</div><div class="status-value" id="injection-status"></div></div><div class="status-item"><div class="status-label">Column valve</div><div class="status-value" id="column-status"></div></div><div class="status-item"><div class="status-label">Outlet</div><div class="status-value" id="outlet-status"></div></div></div>
-  <div class="insight"><span class="insight-label">WHAT TO NOTICE</span><p id="insight-text"></p><div class="mini-control" id="process-control" hidden><label for="process-slider" id="process-label">Progress</label><input id="process-slider" type="range" min="0" max="100" value="0" aria-describedby="process-help"><output id="process-output" for="process-slider">0%</output></div></div>
+  <div class="insight"><span class="insight-label">WHAT TO NOTICE</span><p id="insight-text"></p><div class="mini-control" id="process-control" hidden><label for="process-slider" id="process-label">Progress</label><input id="process-slider" type="range" min="0" max="100" step="any" value="0" aria-describedby="process-help"><output id="process-output" for="process-slider">0%</output></div></div>
  </main>
  <div class="navigation"><div class="nav-left"><div class="step-count"><b id="step-number">01</b><span id="step-total"> / 18</span></div><nav class="step-dots" aria-label="Jump to a step" id="step-dots"></nav></div><span class="shortcuts"><kbd>←</kbd> <kbd>→</kbd> to explore</span><div class="nav-buttons"><button class="button" id="previous-button"><span aria-hidden="true">←</span> Previous</button><button class="button primary" id="next-button">Next <span aria-hidden="true">→</span></button></div></div>
  <div class="footnote">C4 and C5 each use one of the listed alternatives; faint columns are not connected. Column sizes and sample volumes are illustrative. Use the selected column’s method for actual loading volumes, cleaning and storage settings.</div>
 </div>
-<div class="sr-only" aria-live="polite" aria-atomic="true" id="live-status"></div><div class="sr-only" id="process-help">This slider seeks within the current illustration. The operation plays once and holds its completed state while flow markers keep moving. It does not advance to the next step automatically.</div>
+<div class="sr-only" aria-live="polite" aria-atomic="true" id="live-status"></div><div class="sr-only" id="process-help">This slider seeks within the current illustration. Hold or drag it to pause; release it to resume from the selected position. The operation plays once and holds its completed state while flow markers keep moving. It does not advance to the next step automatically.</div>
 <!-- Column identity/geometry references (illustrations are not to scale):
 https://www.cytivalifesciences.co.jp/catalog/0067.html
 https://www.cytivalifesciences.co.jp/catalog/0064.html
@@ -212,7 +215,9 @@ if(SINGLE_COLUMN)columnData.forEach(c=>{c.width=Math.round(c.width*1.5);});
 const methodLabel=()=>isSEC()?'SEC · isocratic':columnData[column-1].type==='hic'?'HIC · decreasing salt':columnData[column-1].type==='affinity'?'Affinity · bind & elute':(columnData[column-1].exchange==='anion'?'Anion':'Cation')+' exchange · bind & elute';
 // A small visual plug; this drawing does not prescribe a loading volume.
 const LOOP_BOTTOM=274,LOOP_HEIGHT=153,SAMPLE_PLUG_HEIGHT=30,RINSE_PLUG_HEIGHT=22;
-let steps=bindingSteps,index=0,column=4,progress=0,lastTime=null,lastPaint=0,pumpAngle=0;
+let steps=bindingSteps,index=0,column=4,progress=0,lastTime=null,lastPaint=0,pumpAngle=0,animationTime=0,scrubbing=false;
+let sliderPointerId=null;
+const sliderKeys=new Set();
 const sourceData=[{key:'a',code:'A1',label:'Buffer A',y:85},{key:'water',code:'A2',label:'H₂O',y:165},{key:'b',code:'B1',label:'Buffer B',y:245},{key:'etoh',code:'B2',label:'20% EtOH',y:325}];
 const paths={feed:'M292 220H345',mixerIn:'M173 220H242',loopIn:'M345 220V105H450V114',loopOut:'M450 282V310H570V220H620',direct:'M345 220H370Q380 220 380 230V320Q380 330 390 330H392Q402 316 412 330H580Q590 330 590 320V230Q590 220 600 220H620',columnBypass:'M620 220V110H980V220H1010',detector:'M1046 220H1082',waste:'M1082 220V125H1170V142',fraction:'M1082 220V308H1170V322',manual:'M385 365H402V310H450V282',displace:'M450 114V56H1170V142'};
 sourceData.forEach(s=>paths[s.key]=`M106 ${s.y}H145Q159 ${s.y} 159 ${s.y+(s.y<220?14:-14)}V${s.y<220?206:234}Q159 220 173 220H242`);
@@ -274,7 +279,7 @@ function gate(id,x,y,open,orientation='horizontal',color=currentColor()){
 function paintPath(id,color,moving=true,opacity=1){
  svg('path',{d:paths[id],class:'liquid-path',stroke:color,opacity,'data-route':id},$('pipe-liquid'));
  if(!moving)return;
- const p=svg('path',{d:paths[id],class:'flow-dash',style:'animation-delay:-'+(performance.now()%900)+'ms'},$('pipe-liquid')),length=p.getTotalLength();
+ const p=svg('path',{d:paths[id],class:'flow-dash',style:'animation-delay:-'+(animationTime%900)+'ms'},$('pipe-liquid')),length=p.getTotalLength();
  for(let at=length>70?45:length/2;at<length-8;at+=105){const pt=p.getPointAtLength(at),prior=p.getPointAtLength(at-2),angle=Math.atan2(pt.y-prior.y,pt.x-prior.x)*180/Math.PI;svg('path',{d:'M-4 -3L0 0L-4 3',class:'arrow',stroke:color,transform:`translate(${pt.x} ${pt.y}) rotate(${angle})`},$('flow-arrows'));}
 }
 function fluidMemory(){
@@ -309,7 +314,7 @@ const particleGuides=new Map(),particlePool=[];
 let particleCount=0;
 function flowParticle(d,delay=0,duration=4,color=colors.sample,position=null,radius=3){
  let guide=particleGuides.get(d);if(!guide){const path=svg('path',{d,fill:'none',stroke:'none'},$('particle-guides'));guide={path,length:path.getTotalLength()};particleGuides.set(d,guide);}
- const t=position===null?((performance.now()/1000-delay)%duration+duration)%duration/duration:position,p=guide.path.getPointAtLength(t*guide.length);
+ const t=position===null?((animationTime/1000-delay)%duration+duration)%duration/duration:position,p=guide.path.getPointAtLength(t*guide.length);
  const dot=particlePool[particleCount]||(particlePool[particleCount]=svg('circle',{stroke:'#fff','stroke-width':.7},$('moving-particles')));particleCount++;
  dot.setAttribute('cx',p.x);dot.setAttribute('cy',p.y);dot.setAttribute('r',radius);dot.setAttribute('fill',color);dot.setAttribute('visibility','visible');
 }
@@ -363,7 +368,7 @@ function renderDiagram(){
  setText('injection-status',s.route==='manual'?'Manual load · port open':s.route==='loop'?'Inject · port closed':s.route==='direct'?'Loop bypass · port closed':'Isolated · port closed');
  setText('column-status',s.col?`C${columnPort()} · ${columnData[column-1].short}`:(s.route==='none'||s.route==='manual')?'All columns isolated':'Bypass open · columns closed');
  setText('outlet-status',s.out==='fraction'?'Fraction collector · waste closed':s.out==='loadWaste'?'Load waste · sample retained':s.out==='none'?'No flow':'Waste · collector closed');
- if(s.process){$('process-slider').value=Math.round(progress*100);$('process-output').textContent=['load','rinse'].includes(s.process)?(progress<1?'Filling':'Loaded'):Math.round(progress*100)+(s.process==='gradient'?'% B':'%');}
+ if(s.process){if(!scrubbing)$('process-slider').value=progress*100;$('process-output').textContent=['load','rinse'].includes(s.process)?(progress<1?'Filling':'Loaded'):Math.round(progress*100)+(s.process==='gradient'?'% B':'%');}
 }
 function renderStep(){const s=steps[index];document.documentElement.style.setProperty('--phase',phases[s.phase].color);setText('step-eyebrow',`${String(index+1).padStart(2,'0')} / ${phases[s.phase].name}`);setText('step-title',s.title);setText('step-description',resolve(s.desc));setText('step-dose',resolve(s.dose));setText('step-dose-label',resolve(s.unit));setText('insight-text',resolve(s.note));setText('step-number',String(index+1).padStart(2,'0'));setText('step-total',' / '+steps.length);$('previous-button').disabled=index===0;$('next-button').innerHTML=index===steps.length-1?'Restart <span aria-hidden="true">↺</span>':'Next <span aria-hidden="true">→</span>';$('process-control').hidden=!s.process;setText('process-label',({gradient:'Gradient',inject:'Transfer',rinse:'Rinse fill',sec:'Separation',flush:'Liquid change',load:'Sample fill'})[s.process]||'Progress');$('process-slider').setAttribute('aria-label',s.process==='gradient'?'Illustrative Buffer B percentage':'Illustrative '+(s.process||'operation')+' progress');
  setText('method-label',methodLabel());
@@ -372,7 +377,7 @@ function renderStep(){const s=steps[index];document.documentElement.style.setPro
  document.querySelectorAll('.phase').forEach((e,i)=>{e.classList.toggle('current',i===s.phase);e.classList.toggle('past',i<s.phase);if(i===s.phase)e.setAttribute('aria-current','step');else e.removeAttribute('aria-current');});document.querySelectorAll('.step-dot').forEach((e,i)=>{e.classList.toggle('done',i<index);e.classList.toggle('active',i===index);if(i===index)e.setAttribute('aria-current','step');else e.removeAttribute('aria-current');});
  renderDiagram();setText('live-status',`Step ${index+1} of ${steps.length}. ${s.title} ${resolve(s.desc)}`);
 }
-function go(to){index=Math.max(0,Math.min(steps.length-1,to));progress=0;lastTime=null;renderStep();}
+function go(to){clearSliderScrub();index=Math.max(0,Math.min(steps.length-1,to));progress=0;lastTime=null;renderStep();}
 function buildNavigation(){
  $('phases').replaceChildren();$('step-dots').replaceChildren();
  phases.forEach((p,i)=>{const b=document.createElement('button');b.className='phase';b.style.setProperty('--phase',p.color);b.style.setProperty('--phase-soft',p.soft);b.title=p.description;b.setAttribute('aria-label',p.name+': '+p.description);b.innerHTML=`<span>${String(i+1).padStart(2,'0')}</span><b class="phase-name">${p.name}</b><b class="phase-short">${p.name}</b>`;b.addEventListener('click',()=>go(steps.findIndex(s=>s.phase===i)));$('phases').appendChild(b);});
@@ -473,18 +478,47 @@ $('column-key').addEventListener('keydown',e=>{
 $('column-key').addEventListener('focusin',e=>{const card=e.target.closest('.column-card');if(card)revealColumnCard(Number(card.id.replace('column-card-','')));});
 window.addEventListener('resize',()=>revealColumnCard(column,false));
 $('previous-button').addEventListener('click',()=>go(index-1));$('next-button').addEventListener('click',()=>go(index===steps.length-1?0:index+1));
-$('process-slider').addEventListener('input',e=>{progress=Math.max(0,Math.min(1,Number(e.target.value)/100));renderDiagram();});
+const processSlider=$('process-slider');
+// Pause both the operation and flow markers while the user controls the slider.
+function updateScrubbing(){
+ const active=sliderPointerId!==null||sliderKeys.size>0;
+ if(scrubbing===active)return;
+ scrubbing=active;document.body.classList.toggle('scrubbing',scrubbing);
+ // A long hold or a background tab must not become a catch-up frame on release.
+ lastTime=null;
+}
+function clearSliderScrub(){sliderPointerId=null;sliderKeys.clear();updateScrubbing();}
+function releaseSliderPointer(e){if(e.pointerId===sliderPointerId){sliderPointerId=null;updateScrubbing();}}
+processSlider.addEventListener('pointerdown',e=>{
+ if(e.button!==0||!e.isPrimary)return;
+ sliderPointerId=e.pointerId;updateScrubbing();
+ processSlider.setPointerCapture(e.pointerId);
+});
+window.addEventListener('pointerup',releaseSliderPointer);
+window.addEventListener('pointercancel',releaseSliderPointer);
+processSlider.addEventListener('lostpointercapture',releaseSliderPointer);
+processSlider.addEventListener('keydown',e=>{
+ if(['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','PageUp','PageDown','Home','End'].includes(e.key)){
+  sliderKeys.add(e.key);updateScrubbing();
+ }
+});
+window.addEventListener('keyup',e=>{if(sliderKeys.delete(e.key))updateScrubbing();});
+processSlider.addEventListener('blur',clearSliderScrub);
+window.addEventListener('blur',clearSliderScrub);
+document.addEventListener('visibilitychange',()=>{if(document.hidden)clearSliderScrub();});
+processSlider.addEventListener('input',e=>{progress=Math.max(0,Math.min(1,Number(e.target.value)/100));renderDiagram();});
 $('fullscreen-button').addEventListener('click',async()=>{try{if(document.fullscreenElement)await document.exitFullscreen();else await document.documentElement.requestFullscreen();}catch{setText('fullscreen-button','Use browser fullscreen');}});document.addEventListener('fullscreenchange',()=>setText('fullscreen-button',document.fullscreenElement?'⛶ Exit fullscreen':'⛶ Fullscreen'));
  document.addEventListener('keydown',e=>{if(/INPUT|SELECT|TEXTAREA/.test(e.target.tagName)||e.altKey||e.ctrlKey||e.metaKey)return;if(e.key==='ArrowRight'){e.preventDefault();go(Math.min(index+1,steps.length-1));}if(e.key==='ArrowLeft'){e.preventDefault();go(index-1);}if(e.key==='Home'){e.preventDefault();go(0);}if(e.key==='End'){e.preventDefault();go(steps.length-1);}});
 function tick(t){
  if(SINGLE_COLUMN)advanceColumnWheel(t);
- const dt=lastTime===null?0:Math.max(0,t-lastTime);lastTime=t;
+ const dt=lastTime===null||scrubbing?0:Math.max(0,t-lastTime);lastTime=t;
+ animationTime+=dt;
  const s=steps[index],pumping=s.route!=='none'&&s.route!=='manual'&&!s.stopped,duration=processDuration();
  // Rotate one connected rotor around its own local origin; never rotate the housing.
- if(pumping){pumpAngle=(pumpAngle+dt*.12)%360;$('pump-rotor').setAttribute('transform',`rotate(${pumpAngle})`);}
+ if(pumping&&!scrubbing){pumpAngle=(pumpAngle+dt*.12)%360;$('pump-rotor').setAttribute('transform',`rotate(${pumpAngle})`);}
  // Operations finish once. CSS flow markers and the pump keep moving afterward.
- // Protein positions update at display refresh rate, independently of text/route redraws.
- if(duration&&progress<1){progress=Math.min(1,progress+dt/duration);if(t-lastPaint>=80||progress===1){lastPaint=t;renderDiagram();}else{renderLiquidContents();renderProteins();}}
+ // The slider and protein positions update every frame; text/route redraws stay throttled.
+ if(!scrubbing&&duration&&progress<1){progress=Math.min(1,progress+dt/duration);processSlider.value=progress*100;if(t-lastPaint>=80||progress===1){lastPaint=t;renderDiagram();}else{renderLiquidContents();renderProteins();}}
  requestAnimationFrame(tick);
 }
 baseDiagram();buildNavigation();go(0);revealColumnCard(column,false);requestAnimationFrame(tick);

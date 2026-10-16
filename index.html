@@ -49,13 +49,14 @@ html,body{height:100%;overflow:hidden}.app{height:100vh;height:100dvh;max-width:
 body[data-view="single"] .column-figure{transform-box:view-box;transform-origin:810px 250px;transform:translate(var(--column-x,0px),var(--column-y,0px)) scale(var(--column-scale,1));opacity:var(--column-opacity,1);pointer-events:none}
 .selected-column-name{font-size:13px;font-weight:650}
 .selected-column-method{font-size:10px;fill:var(--muted)!important}
+.diagram .operating-limit{font-size:10px;fill:var(--muted)}
 @media(max-width:760px){
  .column-card{flex-basis:146px;flex-direction:row;align-items:center;gap:7px;padding:6px 8px}
  .column-card strong{font-size:11px;min-height:0}
  .column-card small{font-size:9px}
  .column-card .column-number{align-self:stretch;height:auto}
  .diagram-wrap{height:auto;min-height:0;padding:4px 0 0}
- .diagram-viewport{flex:none;width:100%;height:auto;aspect-ratio:1240 / 425;overflow:hidden}
+ .diagram-viewport{flex:none;width:100%;height:auto;aspect-ratio:1240 / 460;overflow:hidden}
  .diagram{display:block;width:100%;min-width:0;height:100%;min-height:0}
  .legend{flex:0 0 auto;min-height:42px}
 }
@@ -86,7 +87,7 @@ body[data-view="single"] .column-figure{transform-box:view-box;transform-origin:
   <div class="lesson-heading"><div><div class="eyebrow" id="step-eyebrow"></div><h2 id="step-title"></h2><p class="description" id="step-description"></p></div><div class="dose"><strong id="step-dose"></strong><span id="step-dose-label"></span></div></div>
   <div class="diagram-wrap">
    <div class="diagram-viewport" tabindex="0" role="region" aria-label="Full flow diagram. Rotate your phone for a larger view.">
-   <svg class="diagram" id="diagram" viewBox="0 0 1240 425" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="diagram-title diagram-description">
+   <svg class="diagram" id="diagram" viewBox="0 0 1240 460" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="diagram-title diagram-description">
     <title id="diagram-title">FPLC flow diagram · selected column</title><desc id="diagram-description"></desc>
     <defs><pattern id="resin" width="8" height="8" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1.1" fill="#769083" opacity=".25"/><circle cx="6" cy="6" r="1.1" fill="#769083" opacity=".25"/></pattern><clipPath id="loop-clip"><rect x="426" y="121" width="48" height="153" rx="10"/></clipPath></defs>
     <g aria-hidden="true">
@@ -101,6 +102,7 @@ body[data-view="single"] .column-figure{transform-box:view-box;transform-origin:
      <g clip-path="url(#loop-clip)"><rect id="loop-carrier" x="426" y="121" width="48" height="153" fill="#8d78b4" fill-opacity=".34"/><rect id="loop-incoming" x="426" y="121" width="48" height="0" fill="#338fc5" fill-opacity=".34"/><path id="loop-front" d="M426 121H474" stroke="#338fc5" stroke-width="1.5" opacity="0"/><rect id="loop-sample" x="426" y="274" width="48" height="0" fill="#d75e75" fill-opacity=".68"/><g id="loop-proteins"></g><rect id="seal" x="424" y="264" width="52" height="7" rx="2" fill="#64796c"/><path id="loop-through" d="M450 125V266" fill="none" stroke-width="3" stroke-dasharray="2 12" stroke-linecap="round"/></g>
      <path d="M432 134h7m-7 18h7m-7 18h7m-7 18h7m-7 18h7m-7 18h7m-7 18h7" stroke="#fff" stroke-width="1.5" opacity=".8"/>
      <text x="493" y="145" class="tiny" id="upper-chamber-label">20% EtOH</text><text x="493" y="161" class="tiny" id="seal-label">Seal at base</text><text x="493" y="261" class="tiny" id="sample-label"></text>
+     <g id="superloop-limits"></g>
      <g id="syringe"><path d="M318 355v20m0-10h17m0-12v24m0-20h38v16h-38m38-8h12" fill="none" stroke="#819c8b" stroke-width="2" stroke-linecap="round"/><rect id="syringe-fill" x="339" y="360" width="28" height="10" rx="1" fill="#d75e75" opacity=".16"/><text x="355" y="393" class="micro" text-anchor="middle" id="manual-label">Manual port · closed</text></g>
      <g id="columns"></g><g id="selected-column-caption"></g>
      <rect x="1010" y="205" width="36" height="30" rx="7" class="component"/><path d="M1017 223h5l3-10 5 16 4-7h5" stroke="#8da99a" stroke-width="1.5" fill="none"/><text x="1028" y="255" class="tiny" text-anchor="middle">UV</text>
@@ -175,14 +177,16 @@ Object.assign(secDraft[8],{id:'separate-sec',title:'Separate by size. Collect th
 Object.assign(secDraft[11],{desc:'Finish the SEC run and stop the pump. Keep the collected fractions and switch the outlet back to waste before rinsing.',source:'a',note:'The protein-containing fractions stay separate from the cleaning path. The column still contains Buffer A at the end of this isocratic run.'});
 Object.assign(secDraft[17],{note:'Prepare → inject → separate by size → collect → wash. The collected protein remains in the fraction tubes, separate from the stored system.'});
 const secSteps=secDraft.filter(step=>!['wash-unbound','elute'].includes(step.id));
+// Recommended flow rates (mL/min) and maximum pressures (MPa).
+const superloopLimits={recommendedFlow:20,maxPressure:2};
 const columnData=[
- {name:'Superose 6 10/300 GL',port:1,short:'Superose 6',detail:'10/300 GL · SEC',type:'sec',top:176,height:140,width:24,color:'#6b9362',resin:'#dce8c5'},
- {name:'Superdex 200 10/300 GL',port:2,short:'Superdex 200',detail:'10/300 GL · SEC',type:'sec',top:176,height:140,width:24,color:'#9277ab',resin:'#e6dcf0'},
- {name:'Superdex 75 10/300 GL',port:3,short:'Superdex 75',detail:'10/300 GL · SEC',type:'sec',top:176,height:140,width:24,color:'#bc9340',resin:'#f0e0b7'},
- {name:'HisTrap HP 5 mL',port:4,short:'HisTrap HP',detail:'5 mL · Ni²⁺ affinity',type:'affinity',top:220,height:52,width:38,color:'#397fa8',resin:'#98cce8'},
- {name:'HiTrap Butyl HP 1 mL',port:4,short:'HiTrap Butyl HP',detail:'1 mL · HIC',type:'hic',top:220,height:52,width:26,color:'#b78b3e',resin:'#ecd8a9'},
- {name:'HiScreen SP HP',port:5,short:'HiScreen SP HP',detail:'4.7 mL · cation exchange',type:'ion',exchange:'cation',top:202,height:96,width:27,color:'#b6755f',resin:'#ebccbd'},
- {name:'HiScreen Q HP',port:5,short:'HiScreen Q HP',detail:'4.7 mL · anion exchange',type:'ion',exchange:'anion',top:202,height:96,width:27,color:'#45998d',resin:'#c7e7dc'}
+ {name:'Superose 6 10/300 GL',recommendedFlow:0.5,maxPressure:1.3,port:1,short:'Superose 6',detail:'10/300 GL · SEC',type:'sec',top:176,height:140,width:24,color:'#6b9362',resin:'#dce8c5'},
+ {name:'Superdex 200 10/300 GL',recommendedFlow:0.75,maxPressure:1.5,port:2,short:'Superdex 200',detail:'10/300 GL · SEC',type:'sec',top:176,height:140,width:24,color:'#9277ab',resin:'#e6dcf0'},
+ {name:'Superdex 75 10/300 GL',recommendedFlow:0.5,maxPressure:1.5,port:3,short:'Superdex 75',detail:'10/300 GL · SEC',type:'sec',top:176,height:140,width:24,color:'#bc9340',resin:'#f0e0b7'},
+ {name:'HisTrap HP 5 mL',recommendedFlow:5,maxPressure:0.28,port:4,short:'HisTrap HP',detail:'5 mL · Ni²⁺ affinity',type:'affinity',top:220,height:52,width:38,color:'#397fa8',resin:'#98cce8'},
+ {name:'HiTrap Butyl HP 1 mL',recommendedFlow:3,maxPressure:0.3,port:4,short:'HiTrap Butyl HP',detail:'1 mL · HIC',type:'hic',top:220,height:52,width:26,color:'#b78b3e',resin:'#ecd8a9'},
+ {name:'HiScreen SP HP',recommendedFlow:0.6,maxPressure:0.28,port:5,short:'HiScreen SP HP',detail:'4.7 mL · cation exchange',type:'ion',exchange:'cation',top:202,height:96,width:27,color:'#b6755f',resin:'#ebccbd'},
+ {name:'HiScreen Q HP',recommendedFlow:0.6,maxPressure:0.28,port:5,short:'HiScreen Q HP',detail:'4.7 mL · anion exchange',type:'ion',exchange:'anion',top:202,height:96,width:27,color:'#45998d',resin:'#c7e7dc'}
 ];
 // Q is a strong anion exchanger; SP is a strong cation exchanger.
 // Mechanism reference: https://cdn.cytivalifesciences.com/api/public/content/digi-12823-pdf
@@ -247,7 +251,16 @@ function baseDiagram(){
   svg('g',{id:'bound-'+n},g);
   const key=document.createElement('button');key.className='column-card';key.id='column-card-'+n;key.style.setProperty('--column-color',c.color);key.setAttribute('aria-label','Select C'+c.port+': '+c.name);key.innerHTML=`<span class="column-number">C${c.port}</span><span><strong>${c.short}</strong><small>${c.detail.split(' · ')[0]}<span class="column-method">${c.detail.split(' · ')[1]}</span></small></span>`;key.addEventListener('click',()=>selectColumn(n));$('column-key').appendChild(key);
  }
- if(SINGLE_COLUMN){text($('selected-column-caption'),810,368,'','selected-column-name','middle').id='selected-column-name';text($('selected-column-caption'),810,385,'','selected-column-method','middle').id='selected-column-method';$('column-state-label').setAttribute('y',405);}
+ text($('superloop-limits'),493,190,`Flow: ${superloopLimits.recommendedFlow} mL/min`,'operating-limit').id='superloop-flow-limit';
+ text($('superloop-limits'),493,210,`Pressure: ${superloopLimits.maxPressure} MPa`,'operating-limit').id='superloop-pressure-limit';
+ if(SINGLE_COLUMN){
+  const caption=$('selected-column-caption');
+  text(caption,810,368,'','selected-column-name','middle').id='selected-column-name';
+  text(caption,810,388,'','selected-column-method','middle').id='selected-column-method';
+  $('column-state-label').setAttribute('y',408);
+  text(caption,810,428,'','operating-limit','middle').id='selected-column-flow-limit';
+  text(caption,810,448,'','operating-limit','middle').id='selected-column-pressure-limit';
+ }
  for(let i=0;i<5;i++){const x=1125+i*20;svg('path',{d:`M${x} 334v25q0 10 6 10t6-10v-25`,fill:'#fff',stroke:'#a7bca9','stroke-width':1.5},$('fraction-tubes'));svg('rect',{id:'fraction-fill-'+i,x:x+2,y:348,width:8,height:18,rx:3,fill:colors.sample,opacity:0},$('fraction-tubes'));text($('fraction-tubes'),x+6,343,String(i+1),'tiny','middle');}
 }
 function gate(id,x,y,open,orientation='horizontal',color=currentColor()){
@@ -340,7 +353,7 @@ function renderDiagram(){
  for(let i=0;i<5;i++){$('fraction-fill-'+i).setAttribute('opacity',collected>(i*.17)?(i===2||i===3?.75:.36):0);}
  setText('waste-label',s.out==='loadWaste'?'Displaced buffer':s.out==='waste'?(s.stopped?'Selected · no flow':'Receiving flow'):'No flow');$('waste-fill').setAttribute('fill',s.route==='manual'?colors[mem.loop]:outletColor);setText('fraction-label',s.out==='fraction'?(s.stopped?'Ready to collect':collected>=1?'Fractions collected':'Collecting'):afterCollection?'Fractions retained':'');
  setText('column-state-label',SINGLE_COLUMN?(s.col?`C${columnPort()} · ${s.stopped?'selected · pump stopped':'in flow'}`:`C${columnPort()} isolated · ${store?'20% EtOH':s.route==='manual'?'manual loading':'column bypass'}`):s.col?`C${columnPort()} ${s.stopped?'selected':'in flow'} · other columns isolated`:`All columns isolated · ${store?'20% EtOH':s.route==='manual'?'manual loading':'column bypass'}`);
- setText('diagram-description',`${resolve(s.desc)} Injection route: ${s.route}. ${s.col?'Port C'+columnPort()+' is open; other ports are closed.':'All column paths are closed.'} Manual port ${s.route==='manual'?'open':'closed'}. Outlet: ${s.out==='fraction'?'fraction collector':s.out==='none'?'no flow':'waste'}.`);
+ setText('diagram-description',`${resolve(s.desc)} Injection route: ${s.route}. ${s.col?'Port C'+columnPort()+' is open; other ports are closed.':'All column paths are closed.'} Manual port ${s.route==='manual'?'open':'closed'}. Outlet: ${s.out==='fraction'?'fraction collector':s.out==='none'?'no flow':'waste'}. ${columnData[column-1].name}: flow ${columnData[column-1].recommendedFlow} mL/min; pressure ${columnData[column-1].maxPressure} MPa. Superloop: flow ${superloopLimits.recommendedFlow} mL/min; pressure ${superloopLimits.maxPressure} MPa.`);
  setText('liquid-status',s.route==='none'?'20% EtOH · pump stopped':s.route==='manual'?(s.process==='rinse'?'H₂O · syringe':'Sample · syringe'):s.stopped?'Pump stopped':s.source==='gradient'?`${Math.round((1-progress)*100)}% A + ${Math.round(progress*100)}% B`:names[s.source]);$('liquid-dot').style.background=color;
  setText('injection-status',s.route==='manual'?'Manual load · port open':s.route==='loop'?'Inject · port closed':s.route==='direct'?'Loop bypass · port closed':'Isolated · port closed');
  setText('column-status',s.col?`C${columnPort()} · ${columnData[column-1].short}`:(s.route==='none'||s.route==='manual')?'All columns isolated':'Bypass open · columns closed');
@@ -420,6 +433,8 @@ function syncColumnView(){
  if(SINGLE_COLUMN){
   paintColumnWheel();
   setText('selected-column-name',selected.name);setText('selected-column-method',methodLabel());
+  setText('selected-column-flow-limit',`Flow: ${selected.recommendedFlow} mL/min`);
+  setText('selected-column-pressure-limit',`Pressure: ${selected.maxPressure} MPa`);
   renderedColumn=column;
  }
 }

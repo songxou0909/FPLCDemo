@@ -22,8 +22,8 @@
 /* Stable viewport layout: animation changes SVG contents, never panel dimensions. */
 html,body{height:100%;overflow:hidden}.app{height:100vh;height:100dvh;max-width:1680px;display:grid;grid-template-rows:76px 42px minmax(0,1fr)64px 22px;padding:0 max(18px,env(safe-area-inset-right)) 0 max(18px,env(safe-area-inset-left));overflow:hidden}.toolbar{display:grid;grid-template-columns:minmax(0,1fr)auto;gap:18px;padding:8px 0;min-height:0}.toolbar-actions{flex-direction:column;align-items:flex-end;gap:4px}.toolbar-actions .text-button{padding:4px 0}.method-label{font-size:10px;white-space:nowrap}.column-key{grid-template-columns:repeat(5,minmax(0,1fr));padding:0;background:transparent;border:0;gap:6px;min-width:0;height:60px}.column-card{height:60px;padding:6px 8px;gap:8px}.column-card small{font-size:9px}.phases{margin:0 0 8px;min-height:0}.phase{padding:6px 0 0}.phase-name,.phase-short{font-weight:inherit}.phase-short{display:none}.lesson{display:grid;grid-template-rows:116px minmax(0,1fr)60px 76px;min-height:0;overflow:hidden}.lesson-heading{height:116px;min-height:0;padding:12px 22px;overflow:auto;scrollbar-width:thin}.lesson-heading>div:first-child{min-width:0}.description{max-width:none}.dose{flex:0 0 116px;width:116px}.diagram-wrap{display:flex;flex-direction:column;min-height:0;padding:0 10px;overflow:hidden}.diagram-viewport{flex:1 1 0;min-height:0;width:100%;overflow:hidden}.diagram{width:100%;height:100%;min-width:0;min-height:0}.diagram .tiny{font-size:10px}.legend{flex:0 0 30px;min-width:0;padding:4px 8px 7px;gap:8px;font-size:9px;line-height:1.4}.liquid-legend,.route-legend{gap:10px;flex-wrap:nowrap}.diagram-hint{display:none}.status-strip{min-height:0;height:60px;padding:12px 20px;gap:12px}.status-value{min-height:18px;line-height:1.35}.status-item{min-width:0;padding-left:16px}.insight{height:76px;min-height:0;padding:11px 20px;gap:18px;overflow:hidden;flex-wrap:nowrap}.insight p{min-width:0;max-height:54px;overflow:auto;scrollbar-width:thin;font-size:12px;line-height:1.5}.mini-control{min-width:245px;width:245px;flex:0 0 245px;padding-left:16px;gap:9px}.mini-control input{min-width:0;flex:1;width:85px}.mini-control label{min-width:55px}.mini-control output{min-width:54px;width:54px;font-variant-numeric:tabular-nums}.mini-control[hidden]{display:flex!important;visibility:hidden;pointer-events:none}.navigation{position:static;min-height:0;height:64px;padding:10px 0;gap:12px}.button{height:44px;width:128px;justify-content:space-between;padding:10px 17px}.footnote{padding:0;height:22px;font-size:9px;line-height:18px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.step-count{min-width:55px}.insight-label{flex:0 0 95px}.phase{min-height:28px}
 @media(min-width:761px) and (max-height:820px){.app{grid-template-rows:68px 36px minmax(0,1fr)58px 18px}.toolbar{padding:4px 0}.lesson{grid-template-rows:102px minmax(0,1fr)53px 64px}.lesson-heading{height:102px;padding:9px 18px}h2{font-size:21px;line-height:1.15;margin:5px 0}.description{font-size:12px;line-height:1.4}.eyebrow{font-size:9px}.dose strong{font-size:25px}.status-strip{height:53px;padding:9px 18px}.status-label{margin-bottom:4px;font-size:8px}.status-value{font-size:11px}.insight{height:64px;padding:8px 18px}.insight p{font-size:11px;max-height:48px}.insight-label{flex-basis:85px;font-size:8px}.mini-control{min-width:220px;width:220px;flex-basis:220px}.navigation{height:58px;padding:7px 0}.legend{font-size:8px;flex-basis:25px}.liquid-legend,.route-legend{gap:7px}.footnote{height:18px;font-size:8px;line-height:16px}}
-/* Phones keep the controls fixed; the complete circuit scales to the available width. */
-@media(max-width:760px){.app{height:100svh;grid-template-rows:88px 34px minmax(0,1fr)64px;padding:env(safe-area-inset-top) max(8px,env(safe-area-inset-right)) env(safe-area-inset-bottom) max(8px,env(safe-area-inset-left))}.toolbar{display:block;padding:4px 0}.toolbar-actions{display:none}.column-key{height:80px;gap:4px}.column-card{height:80px;display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-start;gap:3px;padding:6px 4px}.column-card .column-number{align-self:auto;height:15px;padding-left:5px;font-size:10px}.column-card strong{font-size:10px;line-height:1.25;min-height:25px}.column-card small{font-size:8px;line-height:1.3;margin-top:2px}.column-method{display:none}.phase span,.phase-name{display:none}.phase-short{display:inline}.phase{font-size:10px;min-height:28px;text-align:center;white-space:normal;padding-top:5px}.phases{gap:5px;margin:0 0 6px}.lesson{display:block;overflow-x:hidden;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;overflow-anchor:none;border-radius:9px;-webkit-overflow-scrolling:touch}.lesson-heading{display:block;position:relative;height:180px;padding:12px;overflow:auto}.lesson-heading>div:first-child{display:contents}.eyebrow{font-size:9px;padding-right:85px}h2{font-size:19px;line-height:1.2;height:46px;margin:6px 0;padding-right:75px;letter-spacing:-.4px}.description{font-size:12px;line-height:1.45}.dose{position:absolute;top:12px;right:12px;width:74px;min-width:0;padding:0;border:0}.dose strong{font-size:21px}.dose span{font-size:9px;line-height:1.4}.diagram-wrap{height:auto;padding:0;overflow:hidden}.diagram-viewport{display:block;flex:0 0 auto;width:100%;height:auto;aspect-ratio:1240 / 425;overflow:hidden}.diagram{width:100%;min-width:0;height:100%}.legend{flex:0 0 auto;min-height:42px;display:block;padding:3px 8px;font-size:8px;line-height:1.5}.liquid-legend,.route-legend{justify-content:center;gap:8px;flex-wrap:wrap;min-height:17px}.route-legend{margin-top:1px}.legend-gate{width:11px;height:11px;font-size:10px}.status-strip{grid-template-columns:repeat(2,minmax(0,1fr));height:108px;padding:12px;gap:14px 8px}.status-label{font-size:8px;margin-bottom:4px}.status-value{font-size:11px;min-height:18px}.status-item{padding-left:9px}.status-item:nth-child(3){border:0;padding-left:0}.insight{display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:12px 64px 36px;height:144px;padding:10px 12px;gap:3px;overflow:hidden}.insight-label{font-size:8px}.insight p{font-size:12px;max-height:64px;line-height:1.45}.mini-control{border:0;padding:0;min-width:0;width:100%;height:36px;gap:12px}.mini-control label{font-size:11px;min-width:70px}.mini-control input{height:32px;min-width:80px;width:auto;flex:1}.mini-control output{font-size:11px}.navigation{height:64px;gap:8px;padding:8px 1px}.button{height:48px;width:110px;padding:12px;gap:8px}.nav-buttons{gap:7px}.step-count{font-size:11px;min-width:51px}.step-dots,.shortcuts,.footnote{display:none}.nav-left{gap:0}}
+/* Phones keep the controls fixed; the lesson and circuit scroll in their own areas. */
+@media(max-width:760px){.app{height:100svh;grid-template-rows:88px 34px minmax(0,1fr)64px;padding:env(safe-area-inset-top) max(8px,env(safe-area-inset-right)) env(safe-area-inset-bottom) max(8px,env(safe-area-inset-left))}.toolbar{display:block;padding:4px 0}.toolbar-actions{display:none}.column-key{height:80px;gap:4px}.column-card{height:80px;display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-start;gap:3px;padding:6px 4px}.column-card .column-number{align-self:auto;height:15px;padding-left:5px;font-size:10px}.column-card strong{font-size:10px;line-height:1.25;min-height:25px}.column-card small{font-size:8px;line-height:1.3;margin-top:2px}.column-method{display:none}.phase span,.phase-name{display:none}.phase-short{display:inline}.phase{font-size:10px;min-height:28px;text-align:center;white-space:normal;padding-top:5px}.phases{gap:5px;margin:0 0 6px}.lesson{display:block;overflow-x:hidden;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;overflow-anchor:none;border-radius:9px;-webkit-overflow-scrolling:touch}.lesson-heading{display:block;position:relative;height:180px;padding:12px;overflow:auto}.lesson-heading>div:first-child{display:contents}.eyebrow{font-size:9px;padding-right:85px}h2{font-size:19px;line-height:1.2;height:46px;margin:6px 0;padding-right:75px;letter-spacing:-.4px}.description{font-size:12px;line-height:1.45}.dose{position:absolute;top:12px;right:12px;width:74px;min-width:0;padding:0;border:0}.dose strong{font-size:21px}.dose span{font-size:9px;line-height:1.4}.diagram-wrap{height:438px;padding:0;overflow:hidden}.diagram-viewport{display:block;flex:0 0 377px;height:377px;overflow-x:auto;overflow-y:hidden;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch}.diagram{width:1100px;min-width:1100px;height:377px}.diagram-hint{display:block;flex:0 0 19px;text-align:center;font-size:9px;line-height:19px;color:var(--muted)}.legend{flex:0 0 42px;display:block;padding:3px 8px;font-size:8px;line-height:1.5}.liquid-legend,.route-legend{justify-content:center;gap:8px;flex-wrap:wrap;min-height:17px}.route-legend{margin-top:1px}.legend-gate{width:11px;height:11px;font-size:10px}.status-strip{grid-template-columns:repeat(2,minmax(0,1fr));height:108px;padding:12px;gap:14px 8px}.status-label{font-size:8px;margin-bottom:4px}.status-value{font-size:11px;min-height:18px}.status-item{padding-left:9px}.status-item:nth-child(3){border:0;padding-left:0}.insight{display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:12px 64px 36px;height:144px;padding:10px 12px;gap:3px;overflow:hidden}.insight-label{font-size:8px}.insight p{font-size:12px;max-height:64px;line-height:1.45}.mini-control{border:0;padding:0;min-width:0;width:100%;height:36px;gap:12px}.mini-control label{font-size:11px;min-width:70px}.mini-control input{height:32px;min-width:80px;width:auto;flex:1}.mini-control output{font-size:11px}.navigation{height:64px;gap:8px;padding:8px 1px}.button{height:48px;width:110px;padding:12px;gap:8px}.nav-buttons{gap:7px}.step-count{font-size:11px;min-width:51px}.step-dots,.shortcuts,.footnote{display:none}.nav-left{gap:0}}
 @media(min-width:761px) and (max-height:580px){.app{grid-template-rows:60px 30px minmax(0,1fr)52px}.column-key,.column-card{height:52px}.column-card strong{font-size:10px}.column-card small{font-size:8px}.toolbar{padding:4px 0}.lesson{display:block;overflow-y:auto;overflow-anchor:none}.lesson-heading{height:104px}.diagram-wrap{height:330px}.diagram-viewport{flex:1}.legend{flex-basis:26px}.status-strip{height:54px}.insight{height:68px}.navigation{height:52px;padding:4px 0}.footnote{display:none}.button{height:44px}.phases{margin-bottom:4px}.phase{font-size:10px}.phase span{display:none}}
 @media print{html,body{height:auto;overflow:visible}.app{height:auto;display:block;padding:0}.toolbar{display:block}.toolbar-actions,.phases,.navigation,.footnote,.diagram-hint{display:none}.column-key{height:auto;grid-template-columns:repeat(5,1fr)}.column-card{height:60px}.lesson{display:block;overflow:visible}.lesson-heading{height:auto;min-height:100px}.diagram-wrap{height:410px}.diagram-viewport{height:370px;overflow:visible}.diagram{width:100%;min-width:0;height:370px}.legend{display:flex}.status-strip{grid-template-columns:repeat(4,1fr)}.insight{display:flex;height:auto;min-height:60px}.insight p{max-height:none}.mini-control{display:none!important}}
 /* Consistent phase colours and a clear, stationary selected-column state. */
@@ -31,17 +31,65 @@ html,body{height:100%;overflow:hidden}.app{height:100vh;height:100dvh;max-width:
 .column-card{border-color:#d9e2da}.column-card.selected,.column-card.selected:hover{background:#173e3b;border-color:#173e3b;color:#fff;box-shadow:inset 0 0 0 1px #173e3b,0 2px 5px #173e3b22}.column-card.selected small{color:#dcebe5}.column-card.selected .column-number{border-color:#a9ddd1;color:#fff}
 .lesson-heading{overflow-x:hidden}.dose{min-width:0}.dose strong{font-size:19px;line-height:1.2}.dose span{overflow-wrap:anywhere}
 @media(max-width:760px){.dose strong{font-size:15px}.dose span{font-size:8px}.phase{padding-left:0}.phases{gap:6px}.column-card.selected{box-shadow:inset 0 -3px #91cdbd}}
+
+/* Column selection scrolls independently of the fully fitted schematic. */
+.app{grid-template-columns:minmax(0,1fr)}
+.toolbar,.lesson,.navigation{min-width:0}
+.column-key{display:flex;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x proximity;scroll-padding:4px;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding:3px;gap:6px}
+.column-key::-webkit-scrollbar{display:none}
+.column-card{flex:1 0 148px;height:100%;scroll-snap-align:start;flex-direction:row;align-items:center;justify-content:flex-start;gap:8px;padding:6px 8px}
+.column-card strong{font-size:11px;min-height:0;line-height:1.3}
+.column-card small{font-size:9px;line-height:1.35}
+.column-card .column-number{align-self:stretch;height:auto;flex-shrink:0}
+.column-card:focus-visible{outline-offset:-3px}
+.column-method{display:block}
+.diagram-hint{display:none}
+.column-figure{transform-box:fill-box;transform-origin:center}
+body[data-view="single"] .column-figure:not(.active){display:none}
+.column-entering{animation:column-enter .44s cubic-bezier(.22,.75,.25,1) both}
+.column-leaving{animation:column-leave .22s ease-in both;pointer-events:none;transform-box:fill-box;transform-origin:center}
+.selected-column-name{font-size:13px;font-weight:650}
+.selected-column-method{font-size:10px;fill:var(--muted)!important}
+@keyframes column-enter{from{opacity:0;transform:translateX(34px) scale(.94)}to{opacity:1;transform:translateX(0) scale(1)}}
+@keyframes column-leave{from{opacity:.7;transform:translateX(0) scale(1)}to{opacity:0;transform:translateX(-26px) scale(.96)}}
+@media(max-width:760px){
+ .column-card{flex-basis:146px;flex-direction:row;align-items:center;gap:7px;padding:6px 8px}
+ .column-card strong{font-size:11px;min-height:0}
+ .column-card small{font-size:9px}
+ .column-card .column-number{align-self:stretch;height:auto}
+ .diagram-wrap{height:auto;min-height:0;padding:4px 0 0}
+ .diagram-viewport{flex:none;width:100%;height:auto;aspect-ratio:1240 / 425;overflow:hidden}
+ .diagram{display:block;width:100%;min-width:0;height:100%;min-height:0}
+ .legend{flex:0 0 auto;min-height:42px}
+}
+@media(max-height:580px) and (orientation:landscape){
+ .app{height:100svh;grid-template-rows:60px 30px minmax(0,1fr)52px}
+ .toolbar{padding:4px 0}.column-key{height:52px}.column-card{height:100%}.column-card strong{font-size:10px}.column-card small{font-size:8px}
+ .lesson{display:grid;grid-template-columns:minmax(190px,.8fr) minmax(0,1.6fr);grid-template-rows:calc(100svh - 152px - env(safe-area-inset-top) - env(safe-area-inset-bottom)) auto auto;overflow-y:auto;align-content:start}
+ .lesson-heading{grid-column:1;grid-row:1;display:block;height:100%;padding:10px 12px;overflow-y:auto;border-right:1px solid var(--line)}
+ .lesson-heading>div:first-child{display:block}.eyebrow{padding:0;font-size:8px}
+ h2{height:auto;padding:0;font-size:17px;margin:5px 0}.description{font-size:11px;line-height:1.4}
+ .dose{position:static;width:auto;display:flex;align-items:baseline;gap:8px;margin-top:8px;padding:0;border:0;text-align:left}.dose strong{font-size:14px}.dose span{font-size:9px;margin:0}
+ .diagram-wrap{grid-column:2;grid-row:1;height:100%;padding:0;border-top:0}
+ .diagram-viewport{flex:1 1 0;height:auto;min-height:0;aspect-ratio:auto;overflow:hidden}
+ .diagram{width:100%;min-width:0;height:100%}.legend{flex:0 0 auto;min-height:26px}
+ .legend{font-size:7px;padding:3px 6px}.liquid-legend,.route-legend{flex-wrap:wrap;justify-content:center;gap:4px}.legend{display:block}
+ .status-strip{grid-column:1/-1;grid-row:2}.insight{grid-column:1/-1;grid-row:3}
+ .navigation{height:52px;padding:4px 0}.button{height:44px}.footnote{display:none}
+}
+@media(prefers-reduced-motion:reduce){.column-entering,.column-leaving{animation:none!important}}
+@media print{.column-key{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));height:auto;overflow:visible}.column-card{height:60px}.column-entering{animation:none}.column-leaving{display:none}}
 </style>
 </head>
-<body>
+<body data-view="all">
 <div class="app" id="app">
- <div class="toolbar"><div class="column-key" id="column-key" aria-label="Choose a column"></div><div class="toolbar-actions"><span class="method-label" id="method-label">Affinity · bind &amp; elute</span><button class="text-button" id="fullscreen-button" aria-label="Enter fullscreen">⛶ Fullscreen</button></div></div>
+ <div class="toolbar"><div class="column-key" id="column-key" role="group" aria-label="Choose a column. Swipe horizontally for more columns."></div><div class="toolbar-actions"><span class="method-label" id="method-label">Affinity · bind &amp; elute</span><button class="text-button" id="fullscreen-button" aria-label="Enter fullscreen">⛶ Fullscreen</button></div></div>
  <nav class="phases" aria-label="Lesson phases" id="phases"></nav>
  <main class="lesson" id="lesson">
   <div class="lesson-heading"><div><div class="eyebrow" id="step-eyebrow"></div><h2 id="step-title"></h2><p class="description" id="step-description"></p></div><div class="dose"><strong id="step-dose"></strong><span id="step-dose-label"></span></div></div>
   <div class="diagram-wrap">
-   <div class="diagram-viewport" role="region" aria-label="Complete FPLC flow diagram, scaled to fit the screen.">
-   <svg class="diagram" id="diagram" viewBox="0 0 1240 425" role="img" aria-labelledby="diagram-title diagram-description">
+   <div class="diagram-viewport" tabindex="0" role="region" aria-label="Full flow diagram. Rotate your phone for a larger view.">
+   <svg class="diagram" id="diagram" viewBox="0 0 1240 425" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="diagram-title diagram-description">
     <title id="diagram-title">FPLC flow diagram</title><desc id="diagram-description"></desc>
     <defs><pattern id="resin" width="8" height="8" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1.1" fill="#769083" opacity=".25"/><circle cx="6" cy="6" r="1.1" fill="#769083" opacity=".25"/></pattern><clipPath id="loop-clip"><rect x="426" y="121" width="48" height="153" rx="10"/></clipPath></defs>
     <g aria-hidden="true">
@@ -57,7 +105,7 @@ html,body{height:100%;overflow:hidden}.app{height:100vh;height:100dvh;max-width:
      <path d="M432 134h7m-7 18h7m-7 18h7m-7 18h7m-7 18h7m-7 18h7m-7 18h7" stroke="#fff" stroke-width="1.5" opacity=".8"/>
      <text x="493" y="145" class="tiny" id="upper-chamber-label">20% EtOH</text><text x="493" y="161" class="tiny" id="seal-label">Seal at base</text><text x="493" y="261" class="tiny" id="sample-label"></text>
      <g id="syringe"><path d="M318 355v20m0-10h17m0-12v24m0-20h38v16h-38m38-8h12" fill="none" stroke="#819c8b" stroke-width="2" stroke-linecap="round"/><rect id="syringe-fill" x="339" y="360" width="28" height="10" rx="1" fill="#d75e75" opacity=".16"/><text x="355" y="393" class="micro" text-anchor="middle" id="manual-label">Manual port · closed</text></g>
-     <g id="columns"></g>
+     <g id="column-transition"></g><g id="columns"></g><g id="selected-column-caption"></g>
      <rect x="1010" y="205" width="36" height="30" rx="7" class="component"/><path d="M1017 223h5l3-10 5 16 4-7h5" stroke="#8da99a" stroke-width="1.5" fill="none"/><text x="1028" y="255" class="tiny" text-anchor="middle">UV</text>
      <circle cx="1082" cy="220" r="12" class="component"/><path id="outlet-rotor" d="M1075 220h7l5-5" stroke="#667e70" stroke-width="2" fill="none"/><text x="1082" y="255" class="tiny" text-anchor="middle">Outlet</text>
      <g id="waste"><path d="M1156 142h28v23l23 72q3 9-7 9h-60q-10 0-7-9l23-72Z" class="component"/><path id="waste-fill" d="M1148 203h44l12 35q1 4-4 4h-60q-5 0-4-4Z" fill="#8d78b4" opacity=".2"/><path d="M1155 155h30" stroke="#b7c9bd" stroke-width="2"/><text x="1170" y="270" class="caption" text-anchor="middle">Waste</text><text x="1170" y="286" class="tiny" text-anchor="middle" id="waste-label">No flow</text></g>
@@ -87,6 +135,9 @@ Superloop mechanism: https://cytivalifesciences.co.jp/tech_support/manual/chrcom
 -->
 <script>
 (()=>{'use strict';
+// Each HTML is standalone; this flag selects its schematic presentation.
+const SINGLE_COLUMN=false;
+const reducedMotion=window.matchMedia('(prefers-reduced-motion: reduce)');
 const $=id=>document.getElementById(id),NS='http://www.w3.org/2000/svg';
 const colors={water:'#338fc5',a:'#248875',b:'#c38a2d',etoh:'#8d78b4',sample:'#d75e75'};
 const names={water:'H₂O',a:'Buffer A',b:'Buffer B',etoh:'20% EtOH',sample:'Sample',gradient:'A → B gradient'};
@@ -95,7 +146,7 @@ const phases=[{name:'Prepare',color:'#347c9c',soft:'#e9f2f7',description:'Wash o
 // paths, labels and destinations from this one state to keep them consistent.
 const bindingSteps=[
  {phase:0,title:'Begin in ethanol storage.',desc:'Assume the complete system is filled with 20% ethanol. The pump is stopped, all columns are isolated, and no liquid is moving.',dose:'20%',unit:'ethanol throughout',source:'etoh',route:'none',col:false,out:'none',note:'Before protein work, replace ethanol with water, then binding buffer. Start by washing the superloop while bypassing the columns.'},
- {phase:1,title:'Wash the superloop with water.',desc:'Select H₂O. Pump 150 mL through the superloop, bypass every column, and send the wash to waste.',dose:'150 mL',unit:'through the superloop',source:'water',route:'loop',col:false,out:'waste',note:'Watch the upper route around the column bank. The column bypass is open; all five column paths are closed.'},
+ {phase:1,title:'Wash the superloop with water.',desc:'Select H₂O. Pump 150 mL through the superloop, bypass every column, and send the wash to waste.',dose:'150 mL',unit:'through the superloop',source:'water',route:'loop',col:false,out:'waste',note:'Watch the upper route around the column bank. The column bypass is open; all column paths are closed.'},
  {phase:1,title:'Remove ethanol from your column.',desc:'Select {col}. Bypass the superloop and wash the column with three column volumes of H₂O. Keep the outlet at waste.',dose:'3 CV',unit:'H₂O · selected column',source:'water',route:'direct',col:true,out:'waste',note:'Only {col} is connected. 3 CV means three times its packed-bed volume; all other columns remain isolated.'},
  {phase:1,title:'Equilibrate the column in buffer.',desc:'Switch to Buffer A. Keep the superloop bypassed and pass binding buffer through {col} to waste.',dose:'Buffer A',unit:'until equilibrated',source:'a',route:'direct',col:true,out:'waste',note:'The resin needs the right binding conditions before sample arrives. Use the equilibration volume or endpoint specified by your method.'},
  {phase:1,title:'Fill the superloop with buffer.',desc:'Pass 150 mL of Buffer A through the superloop. Bypass the columns and direct the wash to waste.',dose:'150 mL',unit:'Buffer A · superloop',source:'a',route:'loop',col:false,out:'waste',note:'Now both the superloop and the selected column contain Buffer A. The equilibrated column stays isolated during this wash.'},
@@ -132,17 +183,32 @@ const columnData=[
  {name:'Superdex 200 10/300 GL',short:'Superdex 200',detail:'10/300 GL · SEC',type:'sec',top:176,height:140,width:24,color:'#9277ab',resin:'#e6dcf0'},
  {name:'Superdex 75 10/300 GL',short:'Superdex 75',detail:'10/300 GL · SEC',type:'sec',top:176,height:140,width:24,color:'#bc9340',resin:'#f0e0b7'},
  {name:'HisTrap HP 5 mL',short:'HisTrap HP',detail:'5 mL · Ni²⁺ affinity',type:'affinity',top:220,height:52,width:38,color:'#397fa8',resin:'#98cce8'},
- {name:'HiScreen SP HP',short:'HiScreen',detail:'SP HP · cation exchange',type:'ion',top:202,height:96,width:27,color:'#b6755f',resin:'#ebccbd'}
+ {name:'HiScreen SP HP',short:'HiScreen SP HP',detail:'4.7 mL · cation exchange',type:'ion',exchange:'cation',top:202,height:96,width:27,color:'#b6755f',resin:'#ebccbd'},
+ {name:'HiScreen Q HP',short:'HiScreen Q HP',detail:'4.7 mL · anion exchange',type:'ion',exchange:'anion',top:202,height:96,width:27,color:'#45998d',resin:'#c7e7dc'}
 ];
+// Q is a strong anion exchanger; SP is a strong cation exchanger.
+// Mechanism reference: https://cdn.cytivalifesciences.com/api/public/content/digi-12823-pdf
+const ionSteps=Object.fromEntries(['anion','cation'].map(exchange=>{
+ const method=bindingSteps.map(step=>({...step})),anion=exchange==='anion';
+ const resinCharge=anion?'positively':'negatively',proteinCharge=anion?'negative':'positive';
+ const condition=anion?'above':'below',name=anion?'Q':'SP';
+ const set=(id,values)=>Object.assign(method.find(step=>step.id===id),values);
+ set('equilibrate-column',{note:`${name} resin is ${resinCharge} charged and binds proteins with a net ${proteinCharge} charge. Binding is usually favoured at pH ${condition} the protein’s pI and low salt; use your method’s conditions.`});
+ set('bind',{note:`${name} is a strong ${exchange} exchanger: its ${resinCharge} charged groups retain suitable ${proteinCharge}ly charged proteins. Buffer A flows through while the target stays bound.`});
+ set('elute',{note:'Here Buffer B contains more salt than Buffer A. Increasing salt weakens electrostatic binding, releasing proteins into the fraction tubes; the waste branch is closed.'});
+ return [exchange,method];
+}));
+if(SINGLE_COLUMN)columnData.forEach(c=>{c.width=Math.round(c.width*1.5);});
+const methodLabel=()=>isSEC()?'SEC · isocratic':columnData[column-1].type==='affinity'?'Affinity · bind & elute':(columnData[column-1].exchange==='anion'?'Anion':'Cation')+' exchange · bind & elute';
 // A small visual plug; this drawing does not prescribe a loading volume.
 const LOOP_BOTTOM=274,LOOP_HEIGHT=153,SAMPLE_PLUG_HEIGHT=30,RINSE_PLUG_HEIGHT=22;
 let steps=bindingSteps,index=0,column=4,progress=0,lastTime=null,lastPaint=0,pumpAngle=0;
 const sourceData=[{key:'a',code:'A1',label:'Buffer A',y:85},{key:'water',code:'A2',label:'H₂O',y:165},{key:'b',code:'B1',label:'Buffer B',y:245},{key:'etoh',code:'B2',label:'20% EtOH',y:325}];
 const paths={feed:'M292 220H345',mixerIn:'M173 220H242',loopIn:'M345 220V105H450V114',loopOut:'M450 282V310H570V220H620',direct:'M345 220H370Q380 220 380 230V320Q380 330 390 330H392Q402 316 412 330H580Q590 330 590 320V230Q590 220 600 220H620',columnBypass:'M620 220V110H980V220H1010',detector:'M1046 220H1082',waste:'M1082 220V125H1170V142',fraction:'M1082 220V308H1170V322',manual:'M385 365H402V310H450V282',displace:'M450 114V56H1170V142'};
 sourceData.forEach(s=>paths[s.key]=`M106 ${s.y}H145Q159 ${s.y} 159 ${s.y+(s.y<220?14:-14)}V${s.y<220?206:234}Q159 220 173 220H242`);
-const colX=n=>685+(n-1)*58;
+const colX=n=>SINGLE_COLUMN?810:660+(n-1)*56;
 const isSEC=()=>columnData[column-1].type==='sec';
-for(let n=1;n<=5;n++){const x=colX(n),c=columnData[n-1];paths['col'+n]=`M620 220V150H${x}V${c.top}`;paths['exit'+n]=`M${x} ${c.top+c.height}V340H980V220H1010`;}
+for(let n=1;n<=columnData.length;n++){const x=colX(n),c=columnData[n-1];paths['col'+n]=`M620 220V150H${x}V${c.top}`;paths['exit'+n]=`M${x} ${c.top+c.height}V340H980V220H1010`;}
 function svg(tag,attrs,parent){const e=document.createElementNS(NS,tag);for(const [k,v]of Object.entries(attrs||{}))e.setAttribute(k,v);if(parent)parent.appendChild(e);return e;}
 function text(parent,x,y,value,cls='micro',anchor='start'){const e=svg('text',{x,y,class:cls,'text-anchor':anchor},parent);e.textContent=value;return e;}
 function setText(id,value){$(id).textContent=value;}
@@ -154,10 +220,10 @@ function baseDiagram(){
  svg('defs',{id:'particle-guides'},$('diagram'));
  const b=$('pipe-bases');Object.entries(paths).forEach(([id,d])=>svg('path',{id:'base-'+id,d,class:'pipe'},b));
  for(const s of sourceData){const g=svg('g',{id:'source-'+s.key,style:'--source:'+colors[s.key]},$('sources'));svg('rect',{x:20,y:s.y-27,width:86,height:56,rx:9,class:'source-bottle'},g);svg('rect',{x:26,y:s.y+4,width:74,height:19,rx:4,fill:colors[s.key],opacity:.2},g);text(g,30,s.y-11,s.code,'source-code');text(g,30,s.y+6,s.label,'source-title');}
- for(let n=1;n<=5;n++){
-  const x=colX(n),c=columnData[n-1],left=x-c.width/2,bottom=c.top+c.height,g=svg('g',{id:'column-'+n,style:'--column-color:'+c.color},$('columns'));
+ for(let n=1;n<=columnData.length;n++){
+  const x=colX(n),c=columnData[n-1],left=x-c.width/2,bottom=c.top+c.height,g=svg('g',{id:'column-'+n,class:'column-figure',style:'--column-color:'+c.color},$('columns'));
   svg('title',{},g).textContent=`C${n}: ${c.name}`;
-  svg('rect',{id:'col-halo-'+n,x:x-25,y:119,width:50,height:239,rx:14,fill:c.color,opacity:0},g);
+  svg('rect',{id:'col-halo-'+n,x:x-(SINGLE_COLUMN?76:25),y:119,width:SINGLE_COLUMN?152:50,height:239,rx:14,fill:c.color,opacity:0},g);
   text(g,x,138,'C'+n,'caption column-caption','middle');
   svg('rect',{id:'col-body-'+n,x:left,y:c.top,width:c.width,height:c.height,rx:c.type==='affinity'?8:5,fill:'#fff',stroke:c.color,'stroke-width':1.4},g);
   svg('rect',{id:'col-resin-'+n,x:left+4,y:c.top+9,width:c.width-8,height:c.height-18,rx:2,fill:c.resin},g);
@@ -171,8 +237,9 @@ function baseDiagram(){
   svg('rect',{x:left-1,y:bottom-7,width:c.width+2,height:5,rx:2,fill:c.color},g);
   svg('path',{id:'col-arrow-'+n,d:`M${x} ${bottom-16}v7m-3-3 3 3 3-3`,class:'arrow',stroke:colors.a,opacity:0},g);
   svg('g',{id:'bound-'+n},g);
-  const key=document.createElement('button');key.className='column-card';key.id='column-card-'+n;key.style.setProperty('--column-color',c.color);key.setAttribute('aria-label','Select C'+n+': '+c.name);key.innerHTML=`<span class="column-number">C${n}</span><span><strong>${c.short}</strong><small>${c.detail.split(' · ')[0]}<span class="column-method"> · ${c.detail.split(' · ')[1]}</span></small></span>`;key.addEventListener('click',()=>selectColumn(n));$('column-key').appendChild(key);
+  const key=document.createElement('button');key.className='column-card';key.id='column-card-'+n;key.style.setProperty('--column-color',c.color);key.setAttribute('aria-label','Select C'+n+': '+c.name);key.innerHTML=`<span class="column-number">C${n}</span><span><strong>${c.short}</strong><small>${c.detail.split(' · ')[0]}<span class="column-method">${c.detail.split(' · ')[1]}</span></small></span>`;key.addEventListener('click',()=>selectColumn(n));$('column-key').appendChild(key);
  }
+ if(SINGLE_COLUMN){text($('selected-column-caption'),810,368,'','selected-column-name','middle').id='selected-column-name';text($('selected-column-caption'),810,385,'','selected-column-method','middle').id='selected-column-method';$('column-state-label').setAttribute('y',405);}
  for(let i=0;i<5;i++){const x=1125+i*20;svg('path',{d:`M${x} 334v25q0 10 6 10t6-10v-25`,fill:'#fff',stroke:'#a7bca9','stroke-width':1.5},$('fraction-tubes'));svg('rect',{id:'fraction-fill-'+i,x:x+2,y:348,width:8,height:18,rx:3,fill:colors.sample,opacity:0},$('fraction-tubes'));text($('fraction-tubes'),x+6,343,String(i+1),'tiny','middle');}
 }
 function gate(id,x,y,open,orientation='horizontal',color=currentColor()){
@@ -230,7 +297,7 @@ function renderProteins(){
 }
 function renderLiquidContents(){
  const s=steps[index],pumping=s.route!=='none'&&s.route!=='manual'&&!s.stopped,mem=fluidMemory(),loop=fluidTransition(mem.loop,pumping&&s.route==='loop');
- for(let n=1;n<=5;n++){const c=columnData[n-1],state=fluidTransition(n===column?mem.col:'etoh',n===column&&pumping&&s.col);paintFront('col-liquid-old-'+n,'col-liquid-new-'+n,c.top+9,c.height-18,state);paintFront('col-fill-'+n,'col-incoming-'+n,c.top+9,c.height-18,state);}
+ for(let n=1;n<=columnData.length;n++){const c=columnData[n-1],state=fluidTransition(n===column?mem.col:'etoh',n===column&&pumping&&s.col);paintFront('col-liquid-old-'+n,'col-liquid-new-'+n,c.top+9,c.height-18,state);paintFront('col-fill-'+n,'col-incoming-'+n,c.top+9,c.height-18,state);}
  const rinse=s.process==='rinse'||s.id==='wash-loop';
  const sampleHeight=s.process==='load'?progress*SAMPLE_PLUG_HEIGHT:s.id==='select-inject'?SAMPLE_PLUG_HEIGHT:s.process==='inject'?(1-progress)*SAMPLE_PLUG_HEIGHT:s.process==='rinse'?progress*RINSE_PLUG_HEIGHT:s.id==='wash-loop'?(1-progress)*RINSE_PLUG_HEIGHT:0,sampleY=LOOP_BOTTOM-sampleHeight;
  paintFront('loop-carrier','loop-incoming',121,LOOP_HEIGHT,loop);
@@ -253,9 +320,9 @@ function renderDiagram(){
  const loopOutlet=transferring?colors.sample:loop.outlet,outletColor=s.col?col.outlet:s.route==='loop'?loopOutlet:color;
  if(routeOn){paintPath('feed',color,moving,s.stopped?.45:1);if(s.route==='loop'){paintPath('loopIn',color,moving,s.stopped?.45:1);paintPath('loopOut',loopOutlet,moving,s.stopped?.45:1);}else paintPath('direct',color,moving,s.stopped?.45:1);if(s.col){paintPath('col'+column,transferring?colors.sample:color,moving,s.stopped?.45:1);paintPath('exit'+column,col.outlet,moving,s.stopped?.45:1);}else paintPath('columnBypass',outletColor,moving);paintPath('detector',outletColor,moving,s.stopped?.45:1);paintPath(s.out,outletColor,moving,s.stopped?.45:1);}
  if(s.route==='manual'){paintPath('manual',color,true);paintPath('displace',colors[mem.loop],true);}
- const store=s.route==='none';if(store){Object.keys(paths).filter(k=>!['manual','displace','fraction','a','water','b'].includes(k)).forEach(k=>paintPath(k,colors.etoh,false,.2));}
+ const store=s.route==='none';if(store){Object.keys(paths).filter(k=>!['manual','displace','fraction','a','water','b'].includes(k)&&(!SINGLE_COLUMN||!(/^(col|exit)\d+$/.test(k))||k==='col'+column||k==='exit'+column)).forEach(k=>paintPath(k,colors.etoh,false,.2));}
  gate('loop-in',390,105,s.route==='loop','horizontal');gate('loop-out',510,310,s.route==='loop','horizontal');gate('loop-bypass',508,330,s.route==='direct'||s.route==='manual');gate('manual',394,365,s.route==='manual');gate('displace',532,56,s.route==='manual');gate('column-bypass',811,110,routeOn&&!s.col);
- for(let n=1;n<=5;n++){const open=routeOn&&s.col&&column===n;gate('col-in-'+n,colX(n),165,open,'vertical');gate('col-out-'+n,colX(n),325,open,'vertical');$('col-halo-'+n).setAttribute('opacity',n===column?.10:0);$('col-arrow-'+n).setAttribute('opacity',open&&pumping?1:0);$('col-arrow-'+n).setAttribute('stroke',color);if(n!==column)$('bound-'+n).replaceChildren();}
+ for(let n=1;n<=columnData.length;n++){if(SINGLE_COLUMN&&n!==column){$('bound-'+n).replaceChildren();continue;}const open=routeOn&&s.col&&column===n;gate('col-in-'+n,colX(n),165,open,'vertical');gate('col-out-'+n,colX(n),325,open,'vertical');$('col-halo-'+n).setAttribute('opacity',n===column?.10:0);$('col-arrow-'+n).setAttribute('opacity',open&&pumping?1:0);$('col-arrow-'+n).setAttribute('stroke',color);if(n!==column)$('bound-'+n).replaceChildren();}
  gate('waste',1115,125,s.out==='waste');gate('fraction',1115,308,s.out==='fraction');
  $('outlet-rotor').setAttribute('d',s.out==='fraction'?'M1075 220h7l5 5':'M1075 220h7l5-5');
  $('displaced-label').toggleAttribute('hidden',s.route!=='manual');setText('manual-label',s.route==='manual'?(s.process==='rinse'?'H₂O in · manual port open':'Sample in · manual port open'):'Manual port · closed');$('syringe-fill').setAttribute('fill',color);$('syringe-fill').setAttribute('opacity',s.route==='manual'?.6:.12);
@@ -264,7 +331,7 @@ function renderDiagram(){
  const collected=afterCollection?1:s.process==='sec'?Math.max(0,(progress-.38)/.5):s.process==='gradient'?Math.max(0,(progress-.22)/.65):0;
  for(let i=0;i<5;i++){$('fraction-fill-'+i).setAttribute('opacity',collected>(i*.17)?(i===2||i===3?.75:.36):0);}
  setText('waste-label',s.out==='loadWaste'?'Displaced buffer':s.out==='waste'?(s.stopped?'Selected · no flow':'Receiving flow'):'No flow');$('waste-fill').setAttribute('fill',s.route==='manual'?colors[mem.loop]:outletColor);setText('fraction-label',s.out==='fraction'?(s.stopped?'Ready to collect':collected>=1?'Fractions collected':'Collecting'):afterCollection?'Fractions retained':'');
- setText('column-state-label',s.col?`C${column} ${s.stopped?'selected':'in flow'} · other columns isolated`:`All columns isolated · ${store?'20% EtOH':s.route==='manual'?'manual loading':'column bypass'}`);
+ setText('column-state-label',SINGLE_COLUMN?(s.col?`C${column} · ${s.stopped?'selected · pump stopped':'in flow'}`:`C${column} isolated · ${store?'20% EtOH':s.route==='manual'?'manual loading':'column bypass'}`):s.col?`C${column} ${s.stopped?'selected':'in flow'} · other columns isolated`:`All columns isolated · ${store?'20% EtOH':s.route==='manual'?'manual loading':'column bypass'}`);
  setText('diagram-description',`${resolve(s.desc)} Injection route: ${s.route}. ${s.col?'Column '+column+' is open; other columns are closed.':'All column paths are closed.'} Manual port ${s.route==='manual'?'open':'closed'}. Outlet: ${s.out==='fraction'?'fraction collector':s.out==='none'?'no flow':'waste'}.`);
  setText('liquid-status',s.route==='none'?'20% EtOH · pump stopped':s.route==='manual'?(s.process==='rinse'?'H₂O · syringe':'Sample · syringe'):s.stopped?'Pump stopped':s.source==='gradient'?`${Math.round((1-progress)*100)}% A + ${Math.round(progress*100)}% B`:names[s.source]);$('liquid-dot').style.background=color;
  setText('injection-status',s.route==='manual'?'Manual load · port open':s.route==='loop'?'Inject · port closed':s.route==='direct'?'Loop bypass · port closed':'Isolated · port closed');
@@ -273,7 +340,8 @@ function renderDiagram(){
  if(s.process){$('process-slider').value=Math.round(progress*100);$('process-output').textContent=['load','rinse'].includes(s.process)?(progress<1?'Filling':'Loaded'):Math.round(progress*100)+(s.process==='gradient'?'% B':'%');}
 }
 function renderStep(){const s=steps[index];document.documentElement.style.setProperty('--phase',phases[s.phase].color);setText('step-eyebrow',`${String(index+1).padStart(2,'0')} / ${phases[s.phase].name}`);setText('step-title',s.title);setText('step-description',resolve(s.desc));setText('step-dose',s.dose);setText('step-dose-label',s.unit);setText('insight-text',resolve(s.note));setText('step-number',String(index+1).padStart(2,'0'));setText('step-total',' / '+steps.length);$('previous-button').disabled=index===0;$('next-button').innerHTML=index===steps.length-1?'Restart <span aria-hidden="true">↺</span>':'Next <span aria-hidden="true">→</span>';$('process-control').hidden=!s.process;setText('process-label',({gradient:'Gradient',inject:'Transfer',rinse:'Rinse fill',sec:'Separation',flush:'Liquid change',load:'Sample fill'})[s.process]||'Progress');$('process-slider').setAttribute('aria-label',s.process==='gradient'?'Illustrative Buffer B percentage':'Illustrative '+(s.process||'operation')+' progress');
- setText('method-label',isSEC()?'SEC · isocratic':column===4?'Affinity · bind & elute':'Cation exchange · bind & elute');
+ setText('method-label',methodLabel());
+ syncColumnView();
  columnData.forEach((c,i)=>{const card=$('column-card-'+(i+1));card.classList.toggle('selected',i+1===column);card.setAttribute('aria-pressed',String(i+1===column));});
  document.querySelectorAll('.phase').forEach((e,i)=>{e.classList.toggle('current',i===s.phase);e.classList.toggle('past',i<s.phase);if(i===s.phase)e.setAttribute('aria-current','step');else e.removeAttribute('aria-current');});document.querySelectorAll('.step-dot').forEach((e,i)=>{e.classList.toggle('done',i<index);e.classList.toggle('active',i===index);if(i===index)e.setAttribute('aria-current','step');else e.removeAttribute('aria-current');});
  renderDiagram();setText('live-status',`Step ${index+1} of ${steps.length}. ${s.title} ${resolve(s.desc)}`);
@@ -284,7 +352,51 @@ function buildNavigation(){
  phases.forEach((p,i)=>{const b=document.createElement('button');b.className='phase';b.style.setProperty('--phase',p.color);b.style.setProperty('--phase-soft',p.soft);b.title=p.description;b.setAttribute('aria-label',p.name+': '+p.description);b.innerHTML=`<span>${String(i+1).padStart(2,'0')}</span><b class="phase-name">${p.name}</b><b class="phase-short">${p.name}</b>`;b.addEventListener('click',()=>go(steps.findIndex(s=>s.phase===i)));$('phases').appendChild(b);});
  steps.forEach((s,i)=>{const b=document.createElement('button');b.className='step-dot'+(i>0&&s.phase!==steps[i-1].phase?' phase-start':'');b.style.setProperty('--phase',phases[s.phase].color);b.title=`${i+1}. ${phases[s.phase].name} · ${s.title}`;b.setAttribute('aria-label',`Step ${i+1}, ${phases[s.phase].name}: ${s.title}`);b.addEventListener('click',()=>go(i));$('step-dots').appendChild(b);});
 }
-function selectColumn(n){if(!Number.isInteger(n)||n<1||n>5||n===column)return;const id=steps[index].id;column=n;steps=isSEC()?secSteps:bindingSteps;const equivalent=isSEC()&&['bind','wash-unbound','elute'].includes(id)?'separate-sec':!isSEC()&&id==='separate-sec'?'elute':id;buildNavigation();go(steps.findIndex(s=>s.id===equivalent));}
+function syncColumnView(){
+ columnData.forEach((c,i)=>{
+  const n=i+1,visible=!SINGLE_COLUMN||n===column;
+  $('column-'+n).classList.toggle('active',n===column);
+  $('base-col'+n).style.display=visible?'':'none';
+  $('base-exit'+n).style.display=visible?'':'none';
+ });
+ if(SINGLE_COLUMN){setText('selected-column-name',columnData[column-1].name);setText('selected-column-method',methodLabel());}
+}
+function revealColumnCard(n,smooth=true){
+ const picker=$('column-key'),card=$('column-card-'+n),p=picker.getBoundingClientRect(),c=card.getBoundingClientRect();
+ const shift=c.left<p.left?c.left-p.left-3:c.right>p.right?c.right-p.right+3:0;
+ if(shift)picker.scrollTo({left:picker.scrollLeft+shift,behavior:smooth&&!reducedMotion.matches?'smooth':'auto'});
+}
+function animateColumn(previous){
+ const stage=$('column-transition');stage.replaceChildren();
+ document.querySelectorAll('.column-entering').forEach(el=>el.classList.remove('column-entering'));
+ if(!SINGLE_COLUMN||reducedMotion.matches)return;
+ const ghost=$('column-'+previous).cloneNode(true);
+ ghost.removeAttribute('id');ghost.querySelectorAll('[id]').forEach(el=>el.removeAttribute('id'));
+ ghost.setAttribute('class','column-leaving');stage.appendChild(ghost);
+ ghost.addEventListener('animationend',()=>ghost.remove(),{once:true});
+ const active=$('column-'+column);active.classList.add('column-entering');
+ active.addEventListener('animationend',()=>active.classList.remove('column-entering'),{once:true});
+}
+function selectColumn(n){
+ if(!Number.isInteger(n)||n<1||n>columnData.length)return;
+ revealColumnCard(n);
+ if(n===column)return;
+ const id=steps[index].id,previous=column;column=n;
+ steps=isSEC()?secSteps:columnData[column-1].type==='ion'?ionSteps[columnData[column-1].exchange]:bindingSteps;
+ const equivalent=isSEC()&&['bind','wash-unbound','elute'].includes(id)?'separate-sec':!isSEC()&&id==='separate-sec'?'elute':id;
+ animateColumn(previous);buildNavigation();go(steps.findIndex(s=>s.id===equivalent));
+}
+// Arrow keys within the picker select columns, without also changing lesson steps.
+$('column-key').addEventListener('keydown',e=>{
+ if(e.altKey||e.ctrlKey||e.metaKey)return;
+ const card=e.target.closest('.column-card');if(!card)return;
+ const n=Number(card.id.replace('column-card-',''));
+ const next={ArrowRight:Math.min(columnData.length,n+1),ArrowLeft:Math.max(1,n-1),Home:1,End:columnData.length}[e.key];
+ if(next===undefined)return;e.preventDefault();e.stopPropagation();
+ selectColumn(next);$('column-card-'+next).focus({preventScroll:true});
+});
+$('column-key').addEventListener('focusin',e=>{const card=e.target.closest('.column-card');if(card)revealColumnCard(Number(card.id.replace('column-card-','')));});
+window.addEventListener('resize',()=>revealColumnCard(column,false));
 $('previous-button').addEventListener('click',()=>go(index-1));$('next-button').addEventListener('click',()=>go(index===steps.length-1?0:index+1));
 $('process-slider').addEventListener('input',e=>{progress=Math.max(0,Math.min(1,Number(e.target.value)/100));renderDiagram();});
 $('fullscreen-button').addEventListener('click',async()=>{try{if(document.fullscreenElement)await document.exitFullscreen();else await document.documentElement.requestFullscreen();}catch{setText('fullscreen-button','Use browser fullscreen');}});document.addEventListener('fullscreenchange',()=>setText('fullscreen-button',document.fullscreenElement?'⛶ Exit fullscreen':'⛶ Fullscreen'));
@@ -299,7 +411,7 @@ function tick(t){
  if(duration&&progress<1){progress=Math.min(1,progress+dt/duration);if(t-lastPaint>=80||progress===1){lastPaint=t;renderDiagram();}else{renderLiquidContents();renderProteins();}}
  requestAnimationFrame(tick);
 }
-baseDiagram();buildNavigation();go(0);requestAnimationFrame(tick);
+baseDiagram();buildNavigation();go(0);revealColumnCard(column,false);requestAnimationFrame(tick);
 })();
 </script>
 </body>

@@ -45,13 +45,10 @@ html,body{height:100%;overflow:hidden}.app{height:100vh;height:100dvh;max-width:
 .column-method{display:block}
 .diagram-hint{display:none}
 .column-figure{transform-box:fill-box;transform-origin:center}
-body[data-view="single"] .column-figure:not(.active){display:none}
-.column-entering{animation:column-enter .44s cubic-bezier(.22,.75,.25,1) both}
-.column-leaving{animation:column-leave .22s ease-in both;pointer-events:none;transform-box:fill-box;transform-origin:center}
+/* Real column figures stay in the scene, so interrupted switches remain smooth. */
+body[data-view="single"] .column-figure{transform-box:view-box;transform-origin:810px 250px;transform:translate(var(--column-x,0px),var(--column-y,0px)) scale(var(--column-scale,1));opacity:var(--column-opacity,1);pointer-events:none}
 .selected-column-name{font-size:13px;font-weight:650}
 .selected-column-method{font-size:10px;fill:var(--muted)!important}
-@keyframes column-enter{from{opacity:0;transform:translateX(34px) scale(.94)}to{opacity:1;transform:translateX(0) scale(1)}}
-@keyframes column-leave{from{opacity:.7;transform:translateX(0) scale(1)}to{opacity:0;transform:translateX(-26px) scale(.96)}}
 @media(max-width:760px){
  .column-card{flex-basis:146px;flex-direction:row;align-items:center;gap:7px;padding:6px 8px}
  .column-card strong{font-size:11px;min-height:0}
@@ -77,13 +74,13 @@ body[data-view="single"] .column-figure:not(.active){display:none}
  .status-strip{grid-column:1/-1;grid-row:2}.insight{grid-column:1/-1;grid-row:3}
  .navigation{height:52px;padding:4px 0}.button{height:44px}.footnote{display:none}
 }
-@media(prefers-reduced-motion:reduce){.column-entering,.column-leaving{animation:none!important}}
-@media print{.column-key{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));height:auto;overflow:visible}.column-card{height:60px}.column-entering{animation:none}.column-leaving{display:none}}
+@media(prefers-reduced-motion:reduce){body[data-view="single"] .column-figure{transition:none!important}}
+@media print{.column-key{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));height:auto;overflow:visible}.column-card{height:60px}.column-figure{transition:none!important}}
 </style>
 </head>
 <body data-view="single">
 <div class="app" id="app">
- <div class="toolbar"><div class="column-key" id="column-key" role="group" aria-label="Choose a column. Swipe horizontally for more columns."></div><div class="toolbar-actions"><span class="method-label" id="method-label">Affinity · bind &amp; elute</span><button class="text-button" id="fullscreen-button" aria-label="Enter fullscreen">⛶ Fullscreen</button></div></div>
+ <div class="toolbar"><div class="column-key" id="column-key" role="group" aria-label="Choose a column. C4 and C5 each have interchangeable options. Swipe horizontally for more columns."></div><div class="toolbar-actions"><span class="method-label" id="method-label">Affinity · bind &amp; elute</span><button class="text-button" id="fullscreen-button" aria-label="Enter fullscreen">⛶ Fullscreen</button></div></div>
  <nav class="phases" aria-label="Lesson phases" id="phases"></nav>
  <main class="lesson" id="lesson">
   <div class="lesson-heading"><div><div class="eyebrow" id="step-eyebrow"></div><h2 id="step-title"></h2><p class="description" id="step-description"></p></div><div class="dose"><strong id="step-dose"></strong><span id="step-dose-label"></span></div></div>
@@ -105,7 +102,7 @@ body[data-view="single"] .column-figure:not(.active){display:none}
      <path d="M432 134h7m-7 18h7m-7 18h7m-7 18h7m-7 18h7m-7 18h7m-7 18h7" stroke="#fff" stroke-width="1.5" opacity=".8"/>
      <text x="493" y="145" class="tiny" id="upper-chamber-label">20% EtOH</text><text x="493" y="161" class="tiny" id="seal-label">Seal at base</text><text x="493" y="261" class="tiny" id="sample-label"></text>
      <g id="syringe"><path d="M318 355v20m0-10h17m0-12v24m0-20h38v16h-38m38-8h12" fill="none" stroke="#819c8b" stroke-width="2" stroke-linecap="round"/><rect id="syringe-fill" x="339" y="360" width="28" height="10" rx="1" fill="#d75e75" opacity=".16"/><text x="355" y="393" class="micro" text-anchor="middle" id="manual-label">Manual port · closed</text></g>
-     <g id="column-transition"></g><g id="columns"></g><g id="selected-column-caption"></g>
+     <g id="columns"></g><g id="selected-column-caption"></g>
      <rect x="1010" y="205" width="36" height="30" rx="7" class="component"/><path d="M1017 223h5l3-10 5 16 4-7h5" stroke="#8da99a" stroke-width="1.5" fill="none"/><text x="1028" y="255" class="tiny" text-anchor="middle">UV</text>
      <circle cx="1082" cy="220" r="12" class="component"/><path id="outlet-rotor" d="M1075 220h7l5-5" stroke="#667e70" stroke-width="2" fill="none"/><text x="1082" y="255" class="tiny" text-anchor="middle">Outlet</text>
      <g id="waste"><path d="M1156 142h28v23l23 72q3 9-7 9h-60q-10 0-7-9l23-72Z" class="component"/><path id="waste-fill" d="M1148 203h44l12 35q1 4-4 4h-60q-5 0-4-4Z" fill="#8d78b4" opacity=".2"/><path d="M1155 155h30" stroke="#b7c9bd" stroke-width="2"/><text x="1170" y="270" class="caption" text-anchor="middle">Waste</text><text x="1170" y="286" class="tiny" text-anchor="middle" id="waste-label">No flow</text></g>
@@ -121,7 +118,7 @@ body[data-view="single"] .column-figure:not(.active){display:none}
   <div class="insight"><span class="insight-label">WHAT TO NOTICE</span><p id="insight-text"></p><div class="mini-control" id="process-control" hidden><label for="process-slider" id="process-label">Progress</label><input id="process-slider" type="range" min="0" max="100" value="0" aria-describedby="process-help"><output id="process-output" for="process-slider">0%</output></div></div>
  </main>
  <div class="navigation"><div class="nav-left"><div class="step-count"><b id="step-number">01</b><span id="step-total"> / 18</span></div><nav class="step-dots" aria-label="Jump to a step" id="step-dots"></nav></div><span class="shortcuts"><kbd>←</kbd> <kbd>→</kbd> to explore</span><div class="nav-buttons"><button class="button" id="previous-button"><span aria-hidden="true">←</span> Previous</button><button class="button primary" id="next-button">Next <span aria-hidden="true">→</span></button></div></div>
- <div class="footnote">Column sizes and sample volumes are illustrative. Use the selected column’s method for actual loading volumes, cleaning and storage settings.</div>
+ <div class="footnote">C4 and C5 each use one of the listed alternatives; faint columns are not connected. Column sizes and sample volumes are illustrative. Use the selected column’s method for actual loading volumes, cleaning and storage settings.</div>
 </div>
 <div class="sr-only" aria-live="polite" aria-atomic="true" id="live-status"></div><div class="sr-only" id="process-help">This slider seeks within the current illustration. The operation plays once and holds its completed state while flow markers keep moving. It does not advance to the next step automatically.</div>
 <!-- Column identity/geometry references (illustrations are not to scale):
@@ -179,12 +176,13 @@ Object.assign(secDraft[11],{desc:'Finish the SEC run and stop the pump. Keep the
 Object.assign(secDraft[17],{note:'Prepare → inject → separate by size → collect → wash. The collected protein remains in the fraction tubes, separate from the stored system.'});
 const secSteps=secDraft.filter(step=>!['wash-unbound','elute'].includes(step.id));
 const columnData=[
- {name:'Superose 6 10/300 GL',short:'Superose 6',detail:'10/300 GL · SEC',type:'sec',top:176,height:140,width:24,color:'#6b9362',resin:'#dce8c5'},
- {name:'Superdex 200 10/300 GL',short:'Superdex 200',detail:'10/300 GL · SEC',type:'sec',top:176,height:140,width:24,color:'#9277ab',resin:'#e6dcf0'},
- {name:'Superdex 75 10/300 GL',short:'Superdex 75',detail:'10/300 GL · SEC',type:'sec',top:176,height:140,width:24,color:'#bc9340',resin:'#f0e0b7'},
- {name:'HisTrap HP 5 mL',short:'HisTrap HP',detail:'5 mL · Ni²⁺ affinity',type:'affinity',top:220,height:52,width:38,color:'#397fa8',resin:'#98cce8'},
- {name:'HiScreen SP HP',short:'HiScreen SP HP',detail:'4.7 mL · cation exchange',type:'ion',exchange:'cation',top:202,height:96,width:27,color:'#b6755f',resin:'#ebccbd'},
- {name:'HiScreen Q HP',short:'HiScreen Q HP',detail:'4.7 mL · anion exchange',type:'ion',exchange:'anion',top:202,height:96,width:27,color:'#45998d',resin:'#c7e7dc'}
+ {name:'Superose 6 10/300 GL',port:1,short:'Superose 6',detail:'10/300 GL · SEC',type:'sec',top:176,height:140,width:24,color:'#6b9362',resin:'#dce8c5'},
+ {name:'Superdex 200 10/300 GL',port:2,short:'Superdex 200',detail:'10/300 GL · SEC',type:'sec',top:176,height:140,width:24,color:'#9277ab',resin:'#e6dcf0'},
+ {name:'Superdex 75 10/300 GL',port:3,short:'Superdex 75',detail:'10/300 GL · SEC',type:'sec',top:176,height:140,width:24,color:'#bc9340',resin:'#f0e0b7'},
+ {name:'HisTrap HP 5 mL',port:4,short:'HisTrap HP',detail:'5 mL · Ni²⁺ affinity',type:'affinity',top:220,height:52,width:38,color:'#397fa8',resin:'#98cce8'},
+ {name:'HiTrap Butyl HP 1 mL',port:4,short:'HiTrap Butyl HP',detail:'1 mL · HIC',type:'hic',top:220,height:52,width:26,color:'#b78b3e',resin:'#ecd8a9'},
+ {name:'HiScreen SP HP',port:5,short:'HiScreen SP HP',detail:'4.7 mL · cation exchange',type:'ion',exchange:'cation',top:202,height:96,width:27,color:'#b6755f',resin:'#ebccbd'},
+ {name:'HiScreen Q HP',port:5,short:'HiScreen Q HP',detail:'4.7 mL · anion exchange',type:'ion',exchange:'anion',top:202,height:96,width:27,color:'#45998d',resin:'#c7e7dc'}
 ];
 // Q is a strong anion exchanger; SP is a strong cation exchanger.
 // Mechanism reference: https://cdn.cytivalifesciences.com/api/public/content/digi-12823-pdf
@@ -198,8 +196,16 @@ const ionSteps=Object.fromEntries(['anion','cation'].map(exchange=>{
  set('elute',{note:'Here Buffer B contains more salt than Buffer A. Increasing salt weakens electrostatic binding, releasing proteins into the fraction tubes; the waste branch is closed.'});
  return [exchange,method];
 }));
+// HiTrap Butyl HP uses hydrophobic interaction chromatography (HIC).
+// Reference: https://cdn.cytivalifesciences.com/api/public/content/digi-11530-pdf
+const hicSteps=bindingSteps.map(step=>({...step}));
+const setHIC=(id,values)=>Object.assign(hicSteps.find(step=>step.id===id),values);
+setHIC('equilibrate-column',{title:'Equilibrate in high-salt buffer.',desc:'Pass high-salt Buffer A through {col}, bypassing the superloop. Send the equilibration flow to waste.',unit:'high-salt binding buffer',note:'High salt promotes binding to the hydrophobic butyl groups. Choose conditions that keep your protein soluble.'});
+setHIC('load-sample',{note:'Match the sample to your method’s high-salt binding conditions before loading. The sample raises the seal; displaced buffer goes to waste.'});
+setHIC('bind',{note:'The target interacts with hydrophobic butyl groups. High-salt Buffer A maintains binding while unbound material leaves.'});
+setHIC('elute',{title:'Lower the salt. Collect the protein.',desc:'Increase low-salt Buffer B through {col}. The falling salt concentration releases bound proteins into the fraction tubes.',unit:'A → B · decreasing salt',note:'Here Buffer A has high salt and Buffer B has low salt. Increasing % B lowers salt and weakens hydrophobic binding.'});
 if(SINGLE_COLUMN)columnData.forEach(c=>{c.width=Math.round(c.width*1.5);});
-const methodLabel=()=>isSEC()?'SEC · isocratic':columnData[column-1].type==='affinity'?'Affinity · bind & elute':(columnData[column-1].exchange==='anion'?'Anion':'Cation')+' exchange · bind & elute';
+const methodLabel=()=>isSEC()?'SEC · isocratic':columnData[column-1].type==='hic'?'HIC · decreasing salt':columnData[column-1].type==='affinity'?'Affinity · bind & elute':(columnData[column-1].exchange==='anion'?'Anion':'Cation')+' exchange · bind & elute';
 // A small visual plug; this drawing does not prescribe a loading volume.
 const LOOP_BOTTOM=274,LOOP_HEIGHT=153,SAMPLE_PLUG_HEIGHT=30,RINSE_PLUG_HEIGHT=22;
 let steps=bindingSteps,index=0,column=4,progress=0,lastTime=null,lastPaint=0,pumpAngle=0;
@@ -208,11 +214,13 @@ const paths={feed:'M292 220H345',mixerIn:'M173 220H242',loopIn:'M345 220V105H450
 sourceData.forEach(s=>paths[s.key]=`M106 ${s.y}H145Q159 ${s.y} 159 ${s.y+(s.y<220?14:-14)}V${s.y<220?206:234}Q159 220 173 220H242`);
 const colX=n=>SINGLE_COLUMN?810:660+(n-1)*56;
 const isSEC=()=>columnData[column-1].type==='sec';
+// Option IDs stay unique; valve ports follow this instrument’s C1–C5 mapping.
+const columnPort=(n=column)=>columnData[n-1].port;
 for(let n=1;n<=columnData.length;n++){const x=colX(n),c=columnData[n-1];paths['col'+n]=`M620 220V150H${x}V${c.top}`;paths['exit'+n]=`M${x} ${c.top+c.height}V340H980V220H1010`;}
 function svg(tag,attrs,parent){const e=document.createElementNS(NS,tag);for(const [k,v]of Object.entries(attrs||{}))e.setAttribute(k,v);if(parent)parent.appendChild(e);return e;}
 function text(parent,x,y,value,cls='micro',anchor='start'){const e=svg('text',{x,y,class:cls,'text-anchor':anchor},parent);e.textContent=value;return e;}
 function setText(id,value){$(id).textContent=value;}
-function resolve(s){return s.replaceAll('{col}',columnData[column-1].name+' (C'+column+')');}
+function resolve(s){return s.replaceAll('{col}',columnData[column-1].name+' (C'+columnPort()+')');}
 function mix(t){const c1=[36,136,117],c2=[195,138,45];return '#'+c1.map((n,i)=>Math.round(n+(c2[i]-n)*t).toString(16).padStart(2,'0')).join('');}
 function currentColor(){return steps[index].source==='gradient'?mix(progress):colors[steps[index].source];}
 function processDuration(){return {gradient:24000,inject:14000,sec:18000,load:6500,rinse:6500,flush:9000}[steps[index].process]||0;}
@@ -222,9 +230,9 @@ function baseDiagram(){
  for(const s of sourceData){const g=svg('g',{id:'source-'+s.key,style:'--source:'+colors[s.key]},$('sources'));svg('rect',{x:20,y:s.y-27,width:86,height:56,rx:9,class:'source-bottle'},g);svg('rect',{x:26,y:s.y+4,width:74,height:19,rx:4,fill:colors[s.key],opacity:.2},g);text(g,30,s.y-11,s.code,'source-code');text(g,30,s.y+6,s.label,'source-title');}
  for(let n=1;n<=columnData.length;n++){
   const x=colX(n),c=columnData[n-1],left=x-c.width/2,bottom=c.top+c.height,g=svg('g',{id:'column-'+n,class:'column-figure',style:'--column-color:'+c.color},$('columns'));
-  svg('title',{},g).textContent=`C${n}: ${c.name}`;
+  svg('title',{},g).textContent=`C${c.port}: ${c.name}`;
   svg('rect',{id:'col-halo-'+n,x:x-(SINGLE_COLUMN?76:25),y:119,width:SINGLE_COLUMN?152:50,height:239,rx:14,fill:c.color,opacity:0},g);
-  text(g,x,138,'C'+n,'caption column-caption','middle');
+  text(g,x,138,'C'+c.port,'caption column-caption','middle');
   svg('rect',{id:'col-body-'+n,x:left,y:c.top,width:c.width,height:c.height,rx:c.type==='affinity'?8:5,fill:'#fff',stroke:c.color,'stroke-width':1.4},g);
   svg('rect',{id:'col-resin-'+n,x:left+4,y:c.top+9,width:c.width-8,height:c.height-18,rx:2,fill:c.resin},g);
   // The solvent front crosses the bed and its side strip; caps retain column identity.
@@ -237,7 +245,7 @@ function baseDiagram(){
   svg('rect',{x:left-1,y:bottom-7,width:c.width+2,height:5,rx:2,fill:c.color},g);
   svg('path',{id:'col-arrow-'+n,d:`M${x} ${bottom-16}v7m-3-3 3 3 3-3`,class:'arrow',stroke:colors.a,opacity:0},g);
   svg('g',{id:'bound-'+n},g);
-  const key=document.createElement('button');key.className='column-card';key.id='column-card-'+n;key.style.setProperty('--column-color',c.color);key.setAttribute('aria-label','Select C'+n+': '+c.name);key.innerHTML=`<span class="column-number">C${n}</span><span><strong>${c.short}</strong><small>${c.detail.split(' · ')[0]}<span class="column-method">${c.detail.split(' · ')[1]}</span></small></span>`;key.addEventListener('click',()=>selectColumn(n));$('column-key').appendChild(key);
+  const key=document.createElement('button');key.className='column-card';key.id='column-card-'+n;key.style.setProperty('--column-color',c.color);key.setAttribute('aria-label','Select C'+c.port+': '+c.name);key.innerHTML=`<span class="column-number">C${c.port}</span><span><strong>${c.short}</strong><small>${c.detail.split(' · ')[0]}<span class="column-method">${c.detail.split(' · ')[1]}</span></small></span>`;key.addEventListener('click',()=>selectColumn(n));$('column-key').appendChild(key);
  }
  if(SINGLE_COLUMN){text($('selected-column-caption'),810,368,'','selected-column-name','middle').id='selected-column-name';text($('selected-column-caption'),810,385,'','selected-column-method','middle').id='selected-column-method';$('column-state-label').setAttribute('y',405);}
  for(let i=0;i<5;i++){const x=1125+i*20;svg('path',{d:`M${x} 334v25q0 10 6 10t6-10v-25`,fill:'#fff',stroke:'#a7bca9','stroke-width':1.5},$('fraction-tubes'));svg('rect',{id:'fraction-fill-'+i,x:x+2,y:348,width:8,height:18,rx:3,fill:colors.sample,opacity:0},$('fraction-tubes'));text($('fraction-tubes'),x+6,343,String(i+1),'tiny','middle');}
@@ -322,7 +330,7 @@ function renderDiagram(){
  if(s.route==='manual'){paintPath('manual',color,true);paintPath('displace',colors[mem.loop],true);}
  const store=s.route==='none';if(store){Object.keys(paths).filter(k=>!['manual','displace','fraction','a','water','b'].includes(k)&&(!SINGLE_COLUMN||!(/^(col|exit)\d+$/.test(k))||k==='col'+column||k==='exit'+column)).forEach(k=>paintPath(k,colors.etoh,false,.2));}
  gate('loop-in',390,105,s.route==='loop','horizontal');gate('loop-out',510,310,s.route==='loop','horizontal');gate('loop-bypass',508,330,s.route==='direct'||s.route==='manual');gate('manual',394,365,s.route==='manual');gate('displace',532,56,s.route==='manual');gate('column-bypass',811,110,routeOn&&!s.col);
- for(let n=1;n<=columnData.length;n++){if(SINGLE_COLUMN&&n!==column){$('bound-'+n).replaceChildren();continue;}const open=routeOn&&s.col&&column===n;gate('col-in-'+n,colX(n),165,open,'vertical');gate('col-out-'+n,colX(n),325,open,'vertical');$('col-halo-'+n).setAttribute('opacity',n===column?.10:0);$('col-arrow-'+n).setAttribute('opacity',open&&pumping?1:0);$('col-arrow-'+n).setAttribute('stroke',color);if(n!==column)$('bound-'+n).replaceChildren();}
+ for(let n=1;n<=columnData.length;n++){if(SINGLE_COLUMN&&n!==column){$('bound-'+n).replaceChildren();$('col-halo-'+n).setAttribute('opacity',0);$('col-arrow-'+n).setAttribute('opacity',0);continue;}const open=routeOn&&s.col&&column===n;gate('col-in-'+n,colX(n),165,open,'vertical');gate('col-out-'+n,colX(n),325,open,'vertical');$('col-halo-'+n).setAttribute('opacity',n===column?.10:0);$('col-arrow-'+n).setAttribute('opacity',open&&pumping?1:0);$('col-arrow-'+n).setAttribute('stroke',color);if(n!==column)$('bound-'+n).replaceChildren();}
  gate('waste',1115,125,s.out==='waste');gate('fraction',1115,308,s.out==='fraction');
  $('outlet-rotor').setAttribute('d',s.out==='fraction'?'M1075 220h7l5 5':'M1075 220h7l5-5');
  $('displaced-label').toggleAttribute('hidden',s.route!=='manual');setText('manual-label',s.route==='manual'?(s.process==='rinse'?'H₂O in · manual port open':'Sample in · manual port open'):'Manual port · closed');$('syringe-fill').setAttribute('fill',color);$('syringe-fill').setAttribute('opacity',s.route==='manual'?.6:.12);
@@ -331,11 +339,11 @@ function renderDiagram(){
  const collected=afterCollection?1:s.process==='sec'?Math.max(0,(progress-.38)/.5):s.process==='gradient'?Math.max(0,(progress-.22)/.65):0;
  for(let i=0;i<5;i++){$('fraction-fill-'+i).setAttribute('opacity',collected>(i*.17)?(i===2||i===3?.75:.36):0);}
  setText('waste-label',s.out==='loadWaste'?'Displaced buffer':s.out==='waste'?(s.stopped?'Selected · no flow':'Receiving flow'):'No flow');$('waste-fill').setAttribute('fill',s.route==='manual'?colors[mem.loop]:outletColor);setText('fraction-label',s.out==='fraction'?(s.stopped?'Ready to collect':collected>=1?'Fractions collected':'Collecting'):afterCollection?'Fractions retained':'');
- setText('column-state-label',SINGLE_COLUMN?(s.col?`C${column} · ${s.stopped?'selected · pump stopped':'in flow'}`:`C${column} isolated · ${store?'20% EtOH':s.route==='manual'?'manual loading':'column bypass'}`):s.col?`C${column} ${s.stopped?'selected':'in flow'} · other columns isolated`:`All columns isolated · ${store?'20% EtOH':s.route==='manual'?'manual loading':'column bypass'}`);
- setText('diagram-description',`${resolve(s.desc)} Injection route: ${s.route}. ${s.col?'Column '+column+' is open; other columns are closed.':'All column paths are closed.'} Manual port ${s.route==='manual'?'open':'closed'}. Outlet: ${s.out==='fraction'?'fraction collector':s.out==='none'?'no flow':'waste'}.`);
+ setText('column-state-label',SINGLE_COLUMN?(s.col?`C${columnPort()} · ${s.stopped?'selected · pump stopped':'in flow'}`:`C${columnPort()} isolated · ${store?'20% EtOH':s.route==='manual'?'manual loading':'column bypass'}`):s.col?`C${columnPort()} ${s.stopped?'selected':'in flow'} · other columns isolated`:`All columns isolated · ${store?'20% EtOH':s.route==='manual'?'manual loading':'column bypass'}`);
+ setText('diagram-description',`${resolve(s.desc)} Injection route: ${s.route}. ${s.col?'Port C'+columnPort()+' is open; other ports are closed.':'All column paths are closed.'} Manual port ${s.route==='manual'?'open':'closed'}. Outlet: ${s.out==='fraction'?'fraction collector':s.out==='none'?'no flow':'waste'}.`);
  setText('liquid-status',s.route==='none'?'20% EtOH · pump stopped':s.route==='manual'?(s.process==='rinse'?'H₂O · syringe':'Sample · syringe'):s.stopped?'Pump stopped':s.source==='gradient'?`${Math.round((1-progress)*100)}% A + ${Math.round(progress*100)}% B`:names[s.source]);$('liquid-dot').style.background=color;
  setText('injection-status',s.route==='manual'?'Manual load · port open':s.route==='loop'?'Inject · port closed':s.route==='direct'?'Loop bypass · port closed':'Isolated · port closed');
- setText('column-status',s.col?`C${column} · ${columnData[column-1].short}`:(s.route==='none'||s.route==='manual')?'All columns isolated':'Bypass open · columns closed');
+ setText('column-status',s.col?`C${columnPort()} · ${columnData[column-1].short}`:(s.route==='none'||s.route==='manual')?'All columns isolated':'Bypass open · columns closed');
  setText('outlet-status',s.out==='fraction'?'Fraction collector · waste closed':s.out==='loadWaste'?'Load waste · sample retained':s.out==='none'?'No flow':'Waste · collector closed');
  if(s.process){$('process-slider').value=Math.round(progress*100);$('process-output').textContent=['load','rinse'].includes(s.process)?(progress<1?'Filling':'Loaded'):Math.round(progress*100)+(s.process==='gradient'?'% B':'%');}
 }
@@ -352,39 +360,85 @@ function buildNavigation(){
  phases.forEach((p,i)=>{const b=document.createElement('button');b.className='phase';b.style.setProperty('--phase',p.color);b.style.setProperty('--phase-soft',p.soft);b.title=p.description;b.setAttribute('aria-label',p.name+': '+p.description);b.innerHTML=`<span>${String(i+1).padStart(2,'0')}</span><b class="phase-name">${p.name}</b><b class="phase-short">${p.name}</b>`;b.addEventListener('click',()=>go(steps.findIndex(s=>s.phase===i)));$('phases').appendChild(b);});
  steps.forEach((s,i)=>{const b=document.createElement('button');b.className='step-dot'+(i>0&&s.phase!==steps[i-1].phase?' phase-start':'');b.style.setProperty('--phase',phases[s.phase].color);b.title=`${i+1}. ${phases[s.phase].name} · ${s.title}`;b.setAttribute('aria-label',`Step ${i+1}, ${phases[s.phase].name}: ${s.title}`);b.addEventListener('click',()=>go(i));$('step-dots').appendChild(b);});
 }
+// Project an elliptical wheel into SVG space. The front slot is exactly on the tubing.
+// Double the original orbit radii while preserving column sizes and depth animation.
+const WHEEL_RADIUS_X=92,WHEEL_RADIUS_Y=60,WHEEL_DURATION=780;
+let renderedColumn=null,wheelPosition=column-1,wheelMotion=null;
+let wheelSize={width:columnData[column-1].width,height:columnData[column-1].height};
+function paintColumnWheel(){
+ const figures=columnData.map((c,i)=>{
+  const angle=(i-wheelPosition)*Math.PI*2/columnData.length;
+  let depth=(1+Math.cos(angle))/2;if(depth>1-1e-10)depth=1;
+  const focus=Math.pow(depth,12),limit=.74+.26*focus;
+  const scale=Math.min(.42+.30*depth+.28*focus,wheelSize.height*limit/c.height,wheelSize.width*limit/c.width);
+  const x=depth===1?0:Math.sin(angle)*WHEEL_RADIUS_X,y=(depth-1)*2*WHEEL_RADIUS_Y;
+  const figure=$('column-'+(i+1));
+  figure.style.setProperty('--column-x',x+'px');
+  figure.style.setProperty('--column-y',y+'px');
+  figure.style.setProperty('--column-scale',scale);
+  figure.style.setProperty('--column-opacity',.13+.20*depth+.67*focus);
+  return {figure,depth};
+ });
+ // Paint back to front throughout the turn, so nearer columns naturally cover the stack.
+ const parent=$('columns');
+ figures.sort((a,b)=>a.depth-b.depth).forEach(({figure},i)=>{
+  if(parent.children[i]!==figure)parent.insertBefore(figure,parent.children[i]||null);
+ });
+}
+function advanceColumnWheel(now){
+ if(!wheelMotion)return;
+ const motion=wheelMotion,p=Math.min(1,Math.max(0,(now-motion.start)/WHEEL_DURATION));
+ const eased=1-Math.pow(1-p,3);
+ wheelPosition=motion.from+(motion.to-motion.from)*eased;
+ wheelSize={width:motion.width+(motion.targetWidth-motion.width)*eased,height:motion.height+(motion.targetHeight-motion.height)*eased};
+ if(p===1){wheelPosition=motion.target;wheelMotion=null;}
+ paintColumnWheel();
+}
+function settleColumnWheel(){
+ wheelMotion=null;wheelPosition=column-1;
+ wheelSize={width:columnData[column-1].width,height:columnData[column-1].height};
+ paintColumnWheel();
+}
 function syncColumnView(){
+ const selected=columnData[column-1],changed=SINGLE_COLUMN&&renderedColumn!==column;
+ if(changed){
+  // Resume from the actual wheel position if another choice interrupts the turn.
+  advanceColumnWheel(performance.now());
+  if(renderedColumn===null||reducedMotion.matches)settleColumnWheel();
+  else{
+   const count=columnData.length,target=column-1;
+   const turn=((target-wheelPosition+count/2)%count+count)%count-count/2;
+   wheelMotion={start:performance.now(),from:wheelPosition,to:wheelPosition+turn,target,width:wheelSize.width,height:wheelSize.height,targetWidth:selected.width,targetHeight:selected.height};
+  }
+ }
  columnData.forEach((c,i)=>{
-  const n=i+1,visible=!SINGLE_COLUMN||n===column;
-  $('column-'+n).classList.toggle('active',n===column);
+  const n=i+1,active=n===column,visible=!SINGLE_COLUMN||active;
+  $('column-'+n).classList.toggle('active',active);
   $('base-col'+n).style.display=visible?'':'none';
   $('base-exit'+n).style.display=visible?'':'none';
  });
- if(SINGLE_COLUMN){setText('selected-column-name',columnData[column-1].name);setText('selected-column-method',methodLabel());}
+ if(SINGLE_COLUMN){
+  paintColumnWheel();
+  setText('selected-column-name',selected.name);setText('selected-column-method',methodLabel());
+  renderedColumn=column;
+ }
 }
+reducedMotion.addEventListener('change',event=>{
+ if(event.matches&&SINGLE_COLUMN)settleColumnWheel();
+});
 function revealColumnCard(n,smooth=true){
  const picker=$('column-key'),card=$('column-card-'+n),p=picker.getBoundingClientRect(),c=card.getBoundingClientRect();
  const shift=c.left<p.left?c.left-p.left-3:c.right>p.right?c.right-p.right+3:0;
  if(shift)picker.scrollTo({left:picker.scrollLeft+shift,behavior:smooth&&!reducedMotion.matches?'smooth':'auto'});
 }
-function animateColumn(previous){
- const stage=$('column-transition');stage.replaceChildren();
- document.querySelectorAll('.column-entering').forEach(el=>el.classList.remove('column-entering'));
- if(!SINGLE_COLUMN||reducedMotion.matches)return;
- const ghost=$('column-'+previous).cloneNode(true);
- ghost.removeAttribute('id');ghost.querySelectorAll('[id]').forEach(el=>el.removeAttribute('id'));
- ghost.setAttribute('class','column-leaving');stage.appendChild(ghost);
- ghost.addEventListener('animationend',()=>ghost.remove(),{once:true});
- const active=$('column-'+column);active.classList.add('column-entering');
- active.addEventListener('animationend',()=>active.classList.remove('column-entering'),{once:true});
-}
 function selectColumn(n){
  if(!Number.isInteger(n)||n<1||n>columnData.length)return;
  revealColumnCard(n);
  if(n===column)return;
- const id=steps[index].id,previous=column;column=n;
- steps=isSEC()?secSteps:columnData[column-1].type==='ion'?ionSteps[columnData[column-1].exchange]:bindingSteps;
+ const id=steps[index].id;column=n;
+ steps=isSEC()?secSteps:columnData[column-1].type==='hic'?hicSteps:columnData[column-1].type==='ion'?ionSteps[columnData[column-1].exchange]:bindingSteps;
  const equivalent=isSEC()&&['bind','wash-unbound','elute'].includes(id)?'separate-sec':!isSEC()&&id==='separate-sec'?'elute':id;
- animateColumn(previous);buildNavigation();go(steps.findIndex(s=>s.id===equivalent));
+ buildNavigation();go(steps.findIndex(s=>s.id===equivalent));
 }
 // Arrow keys within the picker select columns, without also changing lesson steps.
 $('column-key').addEventListener('keydown',e=>{
@@ -402,6 +456,7 @@ $('process-slider').addEventListener('input',e=>{progress=Math.max(0,Math.min(1,
 $('fullscreen-button').addEventListener('click',async()=>{try{if(document.fullscreenElement)await document.exitFullscreen();else await document.documentElement.requestFullscreen();}catch{setText('fullscreen-button','Use browser fullscreen');}});document.addEventListener('fullscreenchange',()=>setText('fullscreen-button',document.fullscreenElement?'⛶ Exit fullscreen':'⛶ Fullscreen'));
  document.addEventListener('keydown',e=>{if(/INPUT|SELECT|TEXTAREA/.test(e.target.tagName)||e.altKey||e.ctrlKey||e.metaKey)return;if(e.key==='ArrowRight'){e.preventDefault();go(Math.min(index+1,steps.length-1));}if(e.key==='ArrowLeft'){e.preventDefault();go(index-1);}if(e.key==='Home'){e.preventDefault();go(0);}if(e.key==='End'){e.preventDefault();go(steps.length-1);}});
 function tick(t){
+ if(SINGLE_COLUMN)advanceColumnWheel(t);
  const dt=lastTime===null?0:Math.max(0,t-lastTime);lastTime=t;
  const s=steps[index],pumping=s.route!=='none'&&s.route!=='manual'&&!s.stopped,duration=processDuration();
  // Rotate one connected rotor around its own local origin; never rotate the housing.
